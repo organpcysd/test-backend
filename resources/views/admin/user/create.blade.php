@@ -31,6 +31,35 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
+                                    <label class="form-label">เว็บไซต์</label>
+                                    <select name="website" class="form-control form-control-sm">
+                                        <option value="">--- เลือกเว็บไซต์ ---</option>
+                                        @foreach($websites as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">สิทธิ์การใช้งาน</label>
+                                    <select name="role" class="form-control form-control-sm">
+                                        @foreach($roles as $item)
+                                            @if(Auth::user()->hasRole('superadmin'))
+                                                <option value="{{$item->name}}" @if($item->name == 'user') selected @endif>{{$item->name}}</option>
+                                            @else
+                                                @if($item->name == 'superadmin')
+
+                                                @else
+                                                    <option value="{{$item->name}}" @if($item->name == 'user') selected @endif>{{$item->name}}</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
                                     <label class="form-label">อีเมล</label>
                                     @error('email')
                                         <span class="text-danger">** {{$message}}</span>
@@ -63,35 +92,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label class="form-label">เว็บไซต์</label>
-                            <select name="website" class="form-control form-control-sm">
-                                <option value="">--- เลือกเว็บไซต์ ---</option>
-                                @foreach($websites as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">สิทธิ์การใช้งาน</label>
-                            <select name="role" class="form-control form-control-sm">
-                                @foreach($roles as $item)
-                                    @if(Auth::user()->hasRole('superadmin'))
-                                        <option value="{{$item->name}}" @if($item->name == 'user') selected @endif>{{$item->name}}</option>
-                                    @else
-                                        @if($item->name == 'superadmin')
-
-                                        @else
-                                            <option value="{{$item->name}}" @if($item->name == 'user') selected @endif>{{$item->name}}</option>
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
                             <label class="form-label">สิทธิ์เพิ่มเติม</label>
-                            <select name="permission[]" class="sel2 form-control form-control-sm" multiple style="width: 100%">
+                            <select name="permission[]" class="sel2 form-control form-control-sm" multiple style="width: 100%; height: 200px;">
                                 @foreach($permissions as $item)
                                     <option value="{{$item->name}}">{{$item->description}}</option>
                                 @endforeach
@@ -118,7 +120,16 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('.sel2').select2();
+            // $('.sel2').select2();
+            var demo1 = $('select[name="permission[]"]').bootstrapDualListbox({
+                infoText: 'ทั้งหมด {0} รายการ',
+                infoTextEmpty: 'ไม่มีรายการ',
+                filterPlaceHolder: 'ค้นหา',
+                moveAllLabel: 'เลือกทั้งหมด',
+                removeAllLabel: 'นำออกทั้งหมด',
+                infoTextFiltered: 'ทั้งหมด {0} จาก {1} รายการ',
+                filterTextClear: '',
+            });
         });
 
         function checkpass(){

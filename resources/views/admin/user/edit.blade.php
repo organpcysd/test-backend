@@ -32,6 +32,35 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
+                                    <label class="form-label">เว็บไซต์</label>
+                                    <select name="website" class="form-control form-control-sm">
+                                        <option value="">--- เลือกเว็บไซต์ ---</option>
+                                        @foreach($websites as $item)
+                                            <option value="{{$item->id}}" @if($user->website_id == $item->id) selected @endif>{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">สิทธิ์การใช้งาน</label>
+                                    <select name="role" class="form-control form-control-sm">
+                                        @foreach($roles as $item)
+                                            @if(Auth::user()->hasRole('superadmin'))
+                                                <option @if($user->roles->pluck('name')->first() == $item->name) selected @endif value="{{$item->name}}">{{$item->name}}</option>
+                                            @else
+                                                @if($item->name == 'superadmin')
+
+                                                @else
+                                                    <option @if($user->roles->pluck('name')->first() == $item->name) selected @endif value="{{$item->name}}">{{$item->name}}</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
                                     <label class="form-label">อีเมล</label>
                                     @error('email')
                                         <span class="text-danger">** {{$message}}</span>
@@ -63,36 +92,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label class="form-label">เว็บไซต์</label>
-                            <select name="website" class="form-control form-control-sm">
-                                <option value="">--- เลือกเว็บไซต์ ---</option>
-                                @foreach($websites as $item)
-                                    <option value="{{$item->id}}" @if($user->website_id == $item->id) selected @endif>{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">สิทธิ์การใช้งาน</label>
-                            <select name="role" class="form-control form-control-sm">
-                                @foreach($roles as $item)
-                                    @if(Auth::user()->hasRole('superadmin'))
-                                        <option @if($user->roles->pluck('name')->first() == $item->name) selected @endif value="{{$item->name}}">{{$item->name}}</option>
-                                    @else
-                                        @if($item->name == 'superadmin')
-
-                                        @else
-                                            <option @if($user->roles->pluck('name')->first() == $item->name) selected @endif value="{{$item->name}}">{{$item->name}}</option>
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="mb-3">
                             <label class="form-label">สิทธิ์เพิ่มเติม</label>
-                            <select name="permission[]" class="sel2 form-control form-control-sm" multiple style="width: 100%">
+                            <select name="permission[]" class="sel2 form-control form-control-sm" multiple style="width: 100%; height: 200px;">
                                 @foreach($permissions as $item)
                                     <option value="{{$item->name}}" @if(in_array($item->name,$user->permissions->pluck('name')->ToArray())) selected @endif>{{$item->description}}</option>
                                 @endforeach
@@ -119,7 +123,8 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            $('.sel2').select2();
+            // $('.sel2').select2();
+            var demo1 = $('select[name="permission[]"]').bootstrapDualListbox();
         });
 
         function checkpass(){
