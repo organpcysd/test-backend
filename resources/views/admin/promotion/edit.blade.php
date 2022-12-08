@@ -43,7 +43,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    @if(Auth::user()->hasRole('superadmin'))
+                                                    @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
                                                         <label class="form-label" selected>เว็บไซต์</label>
                                                         <input type="text" class="form-control form-control-sm" value="{{ $promotion->website->name }}" readonly>
@@ -109,12 +109,12 @@
                         <hr/>
                         <div class="mb-3">
                             <label class="form-label">SEO Keyword</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword" value="{{ $promotion->seo_keyword }}"></textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword" >{{ $promotion->seo_keyword }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">SEO Description</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_description" value="{{ $promotion->seo_description }}"></textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_description" >{{ $promotion->seo_description }}</textarea>
                         </div>
                     </div>
                 </div>

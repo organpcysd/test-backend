@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    @if(Auth::user()->hasRole('superadmin'))
+                                                    @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
                                                         <label class="form-label" selected>เว็บไซต์</label>
                                                         <select name="website" class="form-control form-control-sm">

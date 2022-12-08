@@ -27,19 +27,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-cyan active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">ข้อมูลทั่วไป</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-cyan" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">รูปภาพ</a>
-                            </li>
                         </ul>
                     </div>
 
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                                @include('admin.settings.partials.general')
-                            </div>
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                @include('admin.settings.partials.images')
+                                @include('admin.settings.backend.partials.general')
                             </div>
                         </div>
                     </div>

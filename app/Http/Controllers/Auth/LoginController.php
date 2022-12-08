@@ -42,15 +42,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected $maxAttempts = 3;
+    protected $maxAttempts = 2;
     protected $decayMinutes = 1;
 
     public function login(Request $request){
 
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-            return $this->sendLockoutResponse($request);
+
+            $seconds = $this->limiter()->availableIn(
+                $this->throttleKey($request)
+            );
+
+            return redirect('login')->with('message_wrong', trans('auth.throttle', [ 'seconds' => $seconds,'minutes' => ceil($seconds / 60),]));
+
+            // return $this->sendLockoutResponse($request);
+            // return redirect('login')->with('message_wrong',trans('auth.throttle'));
         }
+
         $input = $request->all();
 
         $this->validate($request, [
@@ -61,8 +70,8 @@ class LoginController extends Controller
         if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']))){
             $this->clearLoginAttempts($request);
             if(auth()->user()->status == 1){
-                    return redirect('admin');
-                
+                    return redirect('admin/dashboard');
+
             }else{
                 //status = 0
                 Auth::logout();

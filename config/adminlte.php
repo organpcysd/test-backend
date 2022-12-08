@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-info',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_icon' => 'fa-lg text-info',
+    'classes_auth_btn' => 'btn-info',
 
     /*
     |--------------------------------------------------------------------------
@@ -187,15 +187,15 @@ return [
     */
 
     'classes_body' => 'text-sm',
-    'classes_brand' => '',
+    'classes_brand' => 'text-center',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-info elevation-4',
     'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
     /*
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -292,10 +292,6 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-local',
-            'topnav_right' => true,
-        ],
-        [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
@@ -303,7 +299,8 @@ return [
         // Sidebar items:
         [
             'text'        => 'หน้าแรก',
-            'route'         => 'dashboard',
+            'route'         => 'dashboard.index',
+            'active'      => [''],
             'icon'        => 'fas fa-fw fa-home',
             'can'         => 'dashboard'
         ],
@@ -337,7 +334,7 @@ return [
             'can'         => 'service'
         ],
         [
-            'text'    => 'จัดการสินค้า',
+            'text'    => 'สินค้า',
             'icon'    => 'fas fa-fw fa-boxes',
             'can'     => 'product',
             'submenu' => [
@@ -362,7 +359,14 @@ return [
             ],
         ],
         [
-            'text'    => 'จัดการถาม-ตอบ',
+            'text'        => 'รีวิว',
+            'icon'        => 'fa-solid fa-star',
+            'route'         => 'review.index',
+            'active'      => ['*review*'],
+            'can'         => 'review'
+        ],
+        [
+            'text'    => 'ถาม-ตอบ',
             'icon'    => 'fas fa-fw fa-question-circle',
             'can'     => 'faq',
             'submenu' => [
@@ -379,6 +383,13 @@ return [
                     'can'   => 'faq',
                 ],
             ],
+        ],
+        [
+            'text' => 'สาขาอื่นๆ',
+            'route'  => 'branch.index',
+            'icon' => 'fas fa-fw fa-network-wired',
+            'active'      => ['*branch*'],
+            'can'  => 'website-branch',
         ],
         [
             'text' => 'ตั้งค่าเว็บไซต์',
@@ -454,27 +465,27 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js'
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js'
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css'
                 ],
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -489,7 +500,7 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -499,7 +510,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -524,12 +535,27 @@ return [
             ],
         ],
         'CustomFileInput' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js',
+                ],
+            ],
+        ],
+        'Duallistbox' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/bootstrap-duallistbox.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js',
                 ],
             ],
         ],

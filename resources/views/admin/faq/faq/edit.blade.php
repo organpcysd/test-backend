@@ -42,7 +42,7 @@
                                     <div class="tab-pane fade show active" id="th" role="tabpanel" aria-labelledby="th-tab">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                @if(Auth::user()->hasRole('superadmin'))
+                                                @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                 <div class="mb-3">
                                                     <label class="form-label" selected>เว็บไซต์</label>
                                                     <input type="text" class="form-control form-control-sm" value="{{ $faq->website->name }}" readonly>

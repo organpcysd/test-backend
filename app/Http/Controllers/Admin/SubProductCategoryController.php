@@ -25,7 +25,7 @@ class SubProductCategoryController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = SubProductCategory::all();
             }else{
                 $data = SubProductCategory::where('website_id',Auth::user()->website_id)->get();
@@ -169,7 +169,7 @@ class SubProductCategoryController extends Controller
     {
         $websites = Website::all();
 
-        if(Auth::user()->hasRole('superadmin')){
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = ProductCategory::where('website_id',$subcategory->website_id)->where('publish',1)->get();
         }else{
             $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();

@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = Product::all();
             }else{
                 $data = Product::where('website_id',Auth::user()->website_id)->get();
@@ -125,7 +125,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->hasRole('superadmin')){
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = ProductCategory::where('publish',1)->get();
             $subcategories = SubProductCategory::where('publish',1)->get();
         }else{
@@ -218,7 +218,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        if(Auth::user()->hasRole('superadmin')){
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = ProductCategory::where('website_id',$product->website_id)->where('publish',1)->get();
             $subcategories = SubProductCategory::where('product_category_id',$product->product_category_id)->where('website_id',$product->website_id)->where('publish',1)->get();
         }else{
@@ -415,6 +415,7 @@ class ProductController extends Controller
         $msg = 'บันทึกข้อมูลผิดพลาด';
 
         $product = Product::whereId($id)->first();
+
         if($product->recommended_status == 1) {
             $product->recommended_status = 0;
         }else{

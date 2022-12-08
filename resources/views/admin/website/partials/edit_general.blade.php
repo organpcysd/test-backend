@@ -20,12 +20,12 @@
 
         <div class="mb-3">
             <label class="form-label">ชื่อไตเติ้ลเว็บไซต์</label>
-            <input type="text" class="form-control form-control-sm" name="title">
+            <input type="text" class="form-control form-control-sm" name="title" value="{{ $website->title }}">
         </div>
 
         <div class="mb-3">
             <label class="form-label">ที่อยู่</label>
-            <textarea type="text" class="form-control form-control-sm" name="address" value="{{ $website->address }}"></textarea>
+            <textarea type="text" class="form-control form-control-sm" name="address">{{ $website->address }}</textarea>
         </div>
 
         <hr/>

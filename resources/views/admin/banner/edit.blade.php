@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        @if(Auth::user()->hasRole('superadmin'))
+                        @if(Auth::user()->hasAnyRole('superadmin','admin'))
                         <div class="mb-3">
                             <label class="form-label">เว็บไซต์</label>
                             <select name="website" class="form-control form-control-sm" required readonly>
@@ -45,7 +45,7 @@
                             <div class="col-sm-6">
                                 <div class="text-center">
                                     <label class="form-label">รูปแบนเนอร์ (ปกติ)</label> <br/>
-                                    <img src="@if($banner->getFirstMediaUrl('banner')) {{$banner->getFirstMediaUrl('banner')}} @else {{asset('images/no-image.jpg')}} @endif" width="auto" height="200" id="showimg1"> <br/>
+                                    <img src="@if($banner->getFirstMediaUrl('banner')) {{$banner->getFirstMediaUrl('banner')}} @else {{asset('images/no-image.jpg')}} @endif" height="200" style="cursor: pointer; max-width: 100%" id="showimg1"> <br/>
                                     <span class="text-danger">**รูปภาพขนาด 1920x700 pixel**</span>
                                 </div>
                                 <div class="custom-file">
@@ -56,7 +56,7 @@
                             <div class="col-sm-6">
                                 <div class="text-center">
                                     <label class="form-label">รูปแบนเนอร์ (โมบาย)</label> <br/>
-                                    <img src="@if($banner->getFirstMediaUrl('banner_mobile')) {{$banner->getFirstMediaUrl('banner_mobile')}} @else {{asset('images/no-image.jpg')}} @endif" width="auto" height="200" id="showimg2"> <br/>
+                                    <img src="@if($banner->getFirstMediaUrl('banner_mobile')) {{$banner->getFirstMediaUrl('banner_mobile')}} @else {{asset('images/no-image.jpg')}} @endif" height="200" style="cursor: pointer; max-width: 100%" id="showimg2"> <br/>
                                     <span class="text-danger">**รูปภาพขนาด 500x700 pixel**</span>
                                 </div>
                                 <div class="custom-file">

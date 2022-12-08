@@ -18,7 +18,7 @@
     @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
 @endif
 
-@section('auth_header', 'Template Meeting')
+@section('auth_header', 'เข้าสู่ระบบ')
 
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
@@ -26,7 +26,7 @@
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                value="{{ old('username') }}" placeholder="Username" autofocus>
+                value="{{ old('username') }}" placeholder="ชื่อผู้ใช้" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -53,7 +53,7 @@
         {{-- Password field --}}
         <div class="input-group @if(!session('message_wrong')) mb-3 @endif">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.password') }}">
+                   placeholder="รหัสผ่าน">
 
 
             <div class="input-group-append">
@@ -68,17 +68,12 @@
                 </span>
             @enderror
 
-
-
-
         </div>
         @if(session('message_wrong'))
             <div class='mb-3'>
                 <small class="text-danger"> {{ session('message_wrong') }} </small>
             </div>
         @endif
-
-
 
         {{-- Login field --}}
         <div class="row">

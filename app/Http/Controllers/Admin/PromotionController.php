@@ -24,7 +24,7 @@ class PromotionController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = Promotion::all();
             }else{
                 $data = Promotion::where('website_id',Auth::user()->website_id)->get();
@@ -205,7 +205,7 @@ class PromotionController extends Controller
         ];
 
         $promotion = Promotion::whereId($id)->first();
-        $promotion->title = $title;
+        $promotion->title = json_encode($title);
 
         if($request->website){
             $promotion->website_id = $request->website;
@@ -213,8 +213,8 @@ class PromotionController extends Controller
             $promotion->website_id = Auth::user()->website_id;
         }
 
-        $promotion->short_detail = $short_detail;
-        $promotion->detail = $detail;
+        $promotion->short_detail = json_encode($short_detail);
+        $promotion->detail = json_encode($detail);
         $promotion->seo_keyword = $request->post('seo_keyword');
         $promotion->seo_description = $request->post('seo_description');
         $promotion->updated_at = Carbon::now();

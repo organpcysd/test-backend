@@ -26,7 +26,7 @@ class FaqController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = Faq::all();
             }else{
                 $data = Faq::where('website_id',Auth::user()->website_id)->get();
@@ -34,7 +34,7 @@ class FaqController extends Controller
             return DataTables::make($data)
                 ->addIndexColumn()
                 ->addColumn('website', function($data){
-                    if(Auth::user()->hasRole('superadmin')){
+                    if(Auth::user()->hasAnyRole('superadmin','admin')){
                         $website = $data->website->name;
                     }else{
                         $website = '';
@@ -156,7 +156,7 @@ class FaqController extends Controller
     {
         $websites = Website::all();
 
-        if(Auth::user()->hasRole('superadmin')){
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = FaqCategory::where('website_id',$faq->website_id)->where('publish',1)->get();
         }else{
             $categories = FaqCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();

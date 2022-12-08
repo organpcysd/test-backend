@@ -55,6 +55,8 @@ class CreateWebsitesTable extends Migration
             $table->string('facebook')->nullable()->comment('facebook fanpage');
             $table->string('messenger')->nullable()->comment('facebook messenger');
             $table->string('google_map')->nullable()->comment('หมุดที่อยู่บริษัท');
+            $table->boolean('publish')->nullable()->default(1)->comment('เผยแพร่');
+            $table->integer('sort')->nullable()->default(0)->comment('ลำดับ');
 
             $table->timestamps();
 

@@ -90,12 +90,20 @@ class Website extends Model implements HasMedia
         return $this->hasMany(Product::class,'id','website_id');
     }
 
+    public function review() {
+        return $this->hasMany(Review::class,'id','website_id');
+    }
+
     public function faq_category() {
         return $this->hasMany(FaqCategory::class,'id','website_id');
     }
 
     public function faq() {
         return $this->hasMany(Faq::class,'id','website_id');
+    }
+
+    public function branch() {
+        return $this->hasMany(WebsiteBranch::class,'id','website_id');
     }
 
 }

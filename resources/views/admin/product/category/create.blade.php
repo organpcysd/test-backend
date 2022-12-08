@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    @if(Auth::user()->hasRole('superadmin'))
+                                                    @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
                                                         <label class="form-label" selected>เว็บไซต์</label>
                                                         <select name="website" class="form-control form-control-sm">
@@ -79,7 +79,7 @@
                         <div class="mb-3">
                             <div class="text-center">
                                 <label class="form-label">รูปภาพ</label> <br/>
-                                <img src="{{ asset('images/no-image.jpg') }}" width="auto" height="200" id="showimg1" style="cursor: pointer;"> <br/>
+                                <img src="{{ asset('images/no-image.jpg') }}" height="200" id="showimg1" style="cursor: pointer; max-width: 100%"> <br/>
                                 <span class="text-danger">**รูปภาพขนาด 300x300 pixel**</span>
                             </div>
                             <div class="custom-file">

@@ -42,7 +42,7 @@
                                     <div class="tab-pane fade show active" id="th" role="tabpanel" aria-labelledby="th-tab">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                @if(Auth::user()->hasRole('superadmin'))
+                                                @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                 <div class="mb-3">
                                                     <label class="form-label" selected>เว็บไซต์</label>
                                                     <input type="text" class="form-control form-control-sm" value="{{ $product->website->name }}" readonly>
@@ -142,12 +142,13 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Seo Keyword</label>
-                            <textarea class="form-control form-control-sm" name="seo_keyword"></textarea>
+                            <label class="form-label">SEO Keyword</label>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword">{{ $news->seo_keyword }}</textarea>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Seo Description</label>
-                            <textarea class="form-control form-control-sm" name="seo_description"></textarea>
+                            <label class="form-label">SEO Description</label>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_description">{{ $news->seo_description }}</textarea>
                         </div>
                     </div>
 

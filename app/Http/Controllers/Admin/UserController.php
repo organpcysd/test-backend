@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = User::all();
             }else{
                 $data = User::whereHas('roles', function($q){$q->whereIn('name',['admin','user']);});

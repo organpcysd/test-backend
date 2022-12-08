@@ -24,7 +24,7 @@ class ProductCategoryController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = ProductCategory::all();
             }else{
                 $data = ProductCategory::where('website_id',Auth::user()->website_id)->get();

@@ -15,7 +15,7 @@
     <div class="card card-info card-outline">
         <div class="card-header" style="font-size: 20px;">
             {{ $pagename }}
-            @if(Auth::user()->hasRole('superadmin'))
+            @if(Auth::user()->hasAnyRole('superadmin','admin'))
                 <div class="float-right">
                     <select id="custom-search-input-select" class="form-control form-control-sm">
                         <option value="">ทั้งหมด</option>
@@ -61,7 +61,7 @@
     var table;
         $(document).ready( function () {
 
-            role = {{ Auth::user()->hasRole('superadmin') ? 'true' : 'false' }};
+            role = {{ Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' }};
 
             table = $('#table').DataTable({
                 pageLength: 50,

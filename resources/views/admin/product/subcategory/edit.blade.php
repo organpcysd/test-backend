@@ -43,7 +43,7 @@
                                     <div class="tab-pane fade show active" id="th" role="tabpanel" aria-labelledby="th-tab">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                @if(Auth::user()->hasRole('superadmin'))
+                                                @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                 <div class="mb-3">
                                                     <label class="form-label" selected>เว็บไซต์</label>
                                                     <input type="text" class="form-control form-control-sm" value="{{ $subcategory->website->name }}" readonly>
@@ -90,7 +90,7 @@
                         <div class="mb-3">
                             <div class="text-center">
                                 <label class="form-label">รูปภาพ</label> <br/>
-                                <img src="@if($subcategory->getFirstMediaUrl('sub_product_category')) {{$subcategory->getFirstMediaUrl('sub_product_category')}} @else {{asset('images/no-image.jpg')}} @endif" width="auto" height="200" id="showimg1" style="cursor: pointer;"> <br/>
+                                <img src="@if($subcategory->getFirstMediaUrl('sub_product_category')) {{$subcategory->getFirstMediaUrl('sub_product_category')}} @else {{asset('images/no-image.jpg')}} @endif" height="200" id="showimg1" style="cursor: pointer; max-width: 100%"> <br/>
                                 <span class="text-danger">**รูปภาพขนาด 300x300 pixel**</span>
                             </div>
                             <div class="custom-file">

@@ -24,7 +24,7 @@ class FaqCategoryController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasRole('superadmin')){
+            if(Auth::user()->hasAnyRole('superadmin','admin')){
                 $data = FaqCategory::all();
             }else{
                 $data = FaqCategory::where('website_id',Auth::user()->website_id)->get();

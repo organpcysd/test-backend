@@ -24,8 +24,10 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'promotion', 'description' => 'จัดการหน้าโปรโมชั่น']);
         Permission::create(['name' => 'service', 'description' => 'จัดการหน้าบริการของเรา']);
         Permission::create(['name' => 'product', 'description' => 'จัดการหน้าสินค้า']);
+        Permission::create(['name' => 'review', 'description' => 'จัดการหน้ารีวิว']);
         Permission::create(['name' => 'faq', 'description' => 'จัดการหน้าถาม-ตอบ']);
         Permission::create(['name' => 'settings', 'description' => 'จัดการหน้าตั้งค่าทั่วไป']);
+        Permission::create(['name' => 'website-branch', 'description' => 'จัดการสาขาอื่นๆ']);
         Permission::create(['name' => 'website', 'description' => 'จัดการหน้าเว็บไซต์']);
         Permission::create(['name' => 'user', 'description' => 'จัดการหน้าผู้ใช้งาน']);
         Permission::create(['name' => 'role', 'description' => 'จัดการหน้าบทบาท']);
@@ -33,10 +35,10 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'english-language', 'description' => 'ภาษาอังกฤษ']);
 
         $superadmin_role = Role::create(['name' => 'superadmin']);
-        $superadmin_role->syncPermissions(['dashboard','banner','news','promotion','service','product','faq','settings','website','user', 'role', 'permission','english-language']);
+        $superadmin_role->syncPermissions(['dashboard','banner','news','promotion','service','product','review','faq','settings','website-branch','website','user', 'role', 'permission','english-language']);
 
         $admin_role = Role::create(['name' => 'admin']);
-        $admin_role->syncPermissions(['dashboard','banner','news','promotion','service','product','faq','settings','english-language']);
+        $admin_role->syncPermissions(['dashboard','banner','news','promotion','service','product','review','faq','settings','website-branch','website','user','english-language']);
 
         $user_role = Role::create(['name' => 'user']);
         $user_role->syncPermissions(['dashboard','settings']);
