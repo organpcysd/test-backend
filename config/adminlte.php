@@ -187,24 +187,15 @@ return [
     */
 
     'classes_body' => 'text-sm',
-<<<<<<< Updated upstream
     'classes_brand' => 'text-center bg-info',
     'classes_brand_text' => '',
-=======
-    'classes_brand' => 'bg-info',
-    'classes_brand_text' => 'text-white',
->>>>>>> Stashed changes
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-light-info elevation-4',
     'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-info navbar-light text-white',
-<<<<<<< Updated upstream
     'classes_topnav_nav' => 'navbar-expand-md',
-=======
-    'classes_topnav_nav' => 'navbar-expand text-white',
->>>>>>> Stashed changes
     'classes_topnav_container' => 'container',
 
     /*
