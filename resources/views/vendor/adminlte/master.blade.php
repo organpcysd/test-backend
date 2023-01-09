@@ -93,10 +93,16 @@
     <style>
         /* SIdebar */
         .nav-header {
-            color: #c2c7d0 !important;
-            background: #222d32 !important;
+            color: #000000 !important;
+            background: #F3F3F3 !important;
             padding: -1rem !important;
             border: 0 !important;
+        }
+        .nav-pills .nav-link{
+            border-radius: 0rem !important;
+        }
+        .navbar-light .navbar-nav .nav-link{
+            color: #ffffff
         }
 
         .sidebar {

@@ -187,14 +187,14 @@ return [
     */
 
     'classes_body' => 'text-sm',
-    'classes_brand' => 'text-center',
+    'classes_brand' => 'text-center bg-info',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-info elevation-4',
+    'classes_sidebar' => 'sidebar-light-info elevation-4',
     'classes_sidebar_nav' => 'nav-child-indent',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-info navbar-light text-white',
     'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
