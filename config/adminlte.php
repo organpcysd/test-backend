@@ -187,7 +187,7 @@ return [
     */
 
     'classes_body' => 'text-sm',
-    'classes_brand' => 'text-center bg-info',
+    'classes_brand' => 'bg-info',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
