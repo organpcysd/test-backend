@@ -16,10 +16,10 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->string('title')->comment('หัวข้อ');
-            $table->string('facebook')->comment('facebook');
-            $table->string('instagram')->comment('instagram');
-            $table->string('twitter')->comment('twitter');
             $table->string('slug');
+            $table->string('facebook')->nullable()->comment('facebook');
+            $table->string('instagram')->nullable()->comment('instagram');
+            $table->string('twitter')->nullable()->comment('twitter');
             $table->text('short_detail')->nullable()->comment('รายละเอียดย่อย');
             $table->text('detail')->nullable()->comment('รายละเอียด');
             $table->string('seo_keyword')->nullable()->comment('Seo Keyword');

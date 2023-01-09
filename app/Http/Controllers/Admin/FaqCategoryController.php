@@ -66,7 +66,7 @@ class FaqCategoryController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.faq.category.index',compact('websites'));
     }
 

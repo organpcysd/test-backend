@@ -17,7 +17,7 @@
             {{ $pagename }}
             @if(Auth::user()->hasAnyRole('superadmin','admin'))
                 <div class="float-right">
-                    <select id="custom-search-input-select" class="form-control form-control-sm">
+                    <select id="custom-search-input-select" class="sel2 form-control form-control-sm"  style="width:180px;">
                         <option value="">ทั้งหมด</option>
                         @foreach ($websites as $item)
                             <option>{{ $item->name }}</option>
@@ -31,7 +31,7 @@
                 <input type="search" id="custom-search-input" class="form-control form-control-sm" placeholder="ค้นหา">
             </div>
 
-            <a href="{{ route('promotion.create') }}" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
+            <a href="{{ route('service.create') }}" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
             <table id="table" class="table table-striped table-hover table-sm dataTable no-footer dtr-inline nowrap"
                 style="width: 100%;">
                 <thead>

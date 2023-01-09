@@ -55,7 +55,7 @@
                                                 </div>
                                                 @endif
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <div class="mb-3">
                                                             <label class="form-label">หมวดหมู่หลัก</label>
                                                             <select class="form-control form-control-sm" name="category" id="category">
@@ -66,7 +66,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    {{-- <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">หมวดหมู่ย่อย</label>
                                                             <select class="form-control form-control-sm" name="subcategory" id="subcategory">
@@ -76,7 +76,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
 
                                                 <div class="mb-3">
@@ -143,12 +143,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">SEO Keyword</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword">{{ $news->seo_keyword }}</textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword">{{ $product->seo_keyword }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">SEO Description</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_description">{{ $news->seo_description }}</textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_description">{{ $product->seo_description }}</textarea>
                         </div>
                     </div>
 
@@ -169,20 +169,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 
 <script>
-    $('#category').on('change', function () {
-        id = this.value;
-        $.ajax({
-            type: "get",
-            url: "{{ url('admin/product/getSubcategory') }}/" +id,
-            success: function (response) {
-                let option = "<option selected disabled>--- เลือกหมวดหมู่ย่อย ---</option>";
-                    response.subcategories.forEach(subcategory => {
-                        option += "<option value='"+ subcategory.id + "'>" + JSON.parse(subcategory.title).th + "</option>";
-                    });
-                    $('#subcategory').html(option);
-            }
-        });
-    });
+    // $('#category').on('change', function () {
+    //     id = this.value;
+    //     $.ajax({
+    //         type: "get",
+    //         url: "{{ url('admin/product/getSubcategory') }}/" +id,
+    //         success: function (response) {
+    //             let option = "<option selected disabled>--- เลือกหมวดหมู่ย่อย ---</option>";
+    //                 response.subcategories.forEach(subcategory => {
+    //                     option += "<option value='"+ subcategory.id + "'>" + JSON.parse(subcategory.title).th + "</option>";
+    //                 });
+    //                 $('#subcategory').html(option);
+    //         }
+    //     });
+    // });
 
     //Dropzone
     Dropzone.prototype.defaultOptions.dictRemoveFile = "<i class=\"fa fa-trash ml-auto mt-2 fa-1x text-danger\"></i> ลบรูปภาพ";

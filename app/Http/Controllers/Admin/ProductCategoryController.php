@@ -23,60 +23,47 @@ class ProductCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){
-            if(Auth::user()->hasAnyRole('superadmin','admin')){
-                $data = ProductCategory::all();
-            }else{
-                $data = ProductCategory::where('website_id',Auth::user()->website_id)->get();
-            }
-            return DataTables::make($data)
-                ->addIndexColumn()
-                ->addColumn('website', function($data){
-                    $website = $data->website->name;
-                    return $website;
-                })
-                ->addColumn('title', function ($data){
-                    $title = json_decode($data->title)->th;
-                    return $title;
-                })
-                ->addColumn('btn',function ($data){
-                    $btn = '<a class="btn btn-sm btn-warning" href="'.route('category.edit',['category' => $data['slug']]).'"><i
-                            class="fa fa-pen"
-                            data-toggle="tooltip"
-                            title="แก้ไข"></i></a>
-                            <button class="btn btn-sm btn-danger" onclick="confirmdelete(`'. url('admin/category') . '/' . $data['id'].'`)"><i
-                            class="fa fa-trash"
-                            data-toggle="tooltip"
-                            title="ลบข้อมูล"></i></button>';
-                    return $btn;
-                })
-                ->addColumn('publish',function ($data){
-                    if($data['publish']){
-                        $publish = '<label class="switch"> <input type="checkbox" checked value="0" id="' . $data['id'] . '" onchange="publish(`'. url('admin/category/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
-                    }else{
-                        $publish = '<label class="switch"> <input type="checkbox" value="1" id="'.$data['id'].'" onchange="publish(`'. url('admin/category/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
-                    }
-                    return $publish;
-                })
-                ->addColumn('sorting',function ($data){
-                    $sorting = '<input name="sort" type="number" class="form-control form-control-sm" value="'.$data['sort'].'" id="'.$data['id'].'" onkeyup="sort(this,`'. url('admin/category/sort') . '/' . $data['id'].'`)"/>';
-                    return $sorting;
-                })
-                ->addColumn('img',function ($data){
-                    if($data->getFirstMediaUrl('product_category')){
-                        $img = '<img src="'.asset($data->getFirstMediaUrl('product_category')).'" style="width: auto; height: 40px;">';
-                    }else{
-                        $img = '<img src="'.asset('images/no-image.jpg').'" style="width: auto; height: 40px;">';
-                    }
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
 
-                    return $img;
-                })
-                ->rawColumns(['btn','img','publish','sorting', 'website'])
-                ->make(true);
+            if($request->get('website')){
+                $categories = ProductCategory::tree()->where('website_id',$request->website);
+                $websites = Website::where('publish',1)->get();
+
+                return view('admin.product.category.index',compact('categories','websites'));
+            }else{
+                if($request->ajax()){
+                    $data = Website::where('publish',1)->get();
+                    return DataTables::make($data)
+                        ->addIndexColumn()
+                        ->addColumn('publish',function ($data){
+                            if($data['publish']){
+                                $publish = '<label class="switch"> <input type="checkbox" checked value="0" id="' . $data['id'] . '" onchange="publish(`'. url('admin/website/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
+                            }else{
+                                $publish = '<label class="switch"> <input type="checkbox" value="1" id="'.$data['id'].'" onchange="publish(`'. url('admin/website/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
+                            }
+                            return $publish;
+                        })
+                        ->addColumn('btn',function ($data){
+                            $btn = '<a class="btn btn-sm btn-warning" href="'.route('productcategory.index',['website' => $data['id']]).'"><i
+                                class="fa fa-pen"
+                                data-toggle="tooltip"
+                                title="แก้ไข"></i></a>';
+                            return $btn;
+                        })
+                        ->rawColumns(['btn','publish'])
+                        ->make(true);
+                }
+            }
+
+            $websites = Website::where('publish',1)->get();
+            return view('admin.product.category.admin',compact('websites'));
+        }else{
+            $categories = ProductCategory::tree()->where('website_id',Auth::user()->website_id);
+            $websites = Website::where('publish',1)->get();
+
+            return view('admin.product.category.index',compact('categories','websites'));
         }
 
-        $websites = Website::all();
-        return view('admin.product.category.index',compact('websites'));
     }
 
     /**
@@ -84,10 +71,17 @@ class ProductCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if($request->get('website')){
+            $categories = ProductCategory::where('website_id',$request->website)->get();
+        }else{
+            $categories = ProductCategory::where('website_id',Auth::user()->website_id)->get();
+        }
+
         $websites = Website::all();
-        return view('admin.product.category.create',compact('websites'));
+        // $categories = ProductCategory::all();
+        return view('admin.product.category.create',compact('websites','categories'));
     }
 
     /**
@@ -103,8 +97,15 @@ class ProductCategoryController extends Controller
             'en' => $request->title_en
         ];
 
+        $detail = [
+            'th' => $request->detail_th,
+            'en' => $request->detail_en
+        ];
+
         $category = new ProductCategory();
         $category->title = json_encode($title);
+        $category->detail = json_encode($detail);
+        $category->parent_id = $request->parent;
 
         if($request->website){
             $category->website_id = $request->website;
@@ -134,10 +135,15 @@ class ProductCategoryController extends Controller
                 $category->addMedia(storage_path('app/public').'/'.$getImage->getClientOriginalName())->toMediaCollection('product_category');
             }
             Alert::success('เพิ่มข้อมูลสำเร็จ');
-            return redirect()->route('category.index');
+
+            if($request->website) {
+                return redirect()->route('productcategory.index',['website' => $request->website]);
+            }else{
+                return redirect()->route('productcategory.index');
+            }
         }
 
-        return redirect()->route('category.create');
+        return redirect()->route('productcategory.create');
     }
 
     /**
@@ -157,10 +163,28 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductCategory $category)
+    public function edit($productecategory)
     {
+        $category = ProductCategory::where('slug',$productecategory)->first();
         $websites = Website::all();
-        return view('admin.product.category.edit', compact('category','websites'));
+
+        if(Auth::user()->hasAnyRole('superadmin','admin')){
+            $categories = ProductCategory::where('website_id',$category->website_id)->where('publish',1)->get();
+        }else{
+            $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
+        }
+
+        $cate = [];
+
+        foreach($categories as $item){
+            if(!$item->parent_id){
+                array_push($cate,$item);
+            }
+        }
+
+        dd($cate);
+
+        return view('admin.product.category.edit', compact('category','websites','categories'));
     }
 
     /**
@@ -177,8 +201,15 @@ class ProductCategoryController extends Controller
             'en' => $request->title_en
         ];
 
+        $detail = [
+            'th' => $request->detail_th,
+            'en' => $request->detail_en
+        ];
+
         $category = ProductCategory::whereId($id)->first();
-        $category->title = $title;
+        $category->title = json_encode($title);
+        $category->detail = json_encode($detail);
+        $category->parent_id = $request->parent;
 
         if($request->website){
             $category->website_id = $request->website;
@@ -211,7 +242,7 @@ class ProductCategoryController extends Controller
 
             }
             Alert::success('บันทึกข้อมูล');
-            return redirect()->route('category.index');
+            return redirect()->route('productcategory.index');
         }
 
         Alert::error('ผิดพลาด');

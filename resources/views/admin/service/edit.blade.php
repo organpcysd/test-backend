@@ -109,12 +109,12 @@
                         <hr/>
                         <div class="mb-3">
                             <label class="form-label">SEO Keyword</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword">{{ $news->seo_keyword }}</textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_keyword">{{ $service->seo_keyword }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">SEO Description</label>
-                            <textarea type="text" class="form-control form-control-sm" name="seo_description">{{ $news->seo_description }}</textarea>
+                            <textarea type="text" class="form-control form-control-sm" name="seo_description">{{ $service->seo_description }}</textarea>
                         </div>
                     </div>
                 </div>

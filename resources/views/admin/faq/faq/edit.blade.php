@@ -81,7 +81,7 @@
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">คำถาม</label>
-                                                    <input type="text" class="form-control form-control-sm" name="question_en" value="{{ json_decode($faq->question)->en }}" required>
+                                                    <input type="text" class="form-control form-control-sm" name="question_en" value="{{ json_decode($faq->question)->en }}">
                                                 </div>
 
                                                 <div class="mb-3">

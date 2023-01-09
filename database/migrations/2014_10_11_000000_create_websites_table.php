@@ -15,7 +15,9 @@ class CreateWebsitesTable extends Migration
     {
         Schema::create('websites', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('name')->nullable()->comment('ชื่อเว็บไซต์');
+            $table->string('website_code')->nullable()->comment('รหัสเว็บไซต์');
             $table->string('domain_name')->nullable()->comment('ชื่อโดเมน');
             $table->string('title')->nullable()->comment('ไตเติ้ลเว็บไซต์');
             $table->string('address')->nullable()->comment('ที่อยู่');
@@ -41,11 +43,14 @@ class CreateWebsitesTable extends Migration
             $table->text('seo_keyword')->nullable()->comment('seo keyword');
             $table->text('seo_description')->nullable()->comment('seo description');
 
+            $table->boolean('publish')->nullable()->default(1)->comment('สถานะเว็บไซต์');
+
             $table->timestamps();
         });
 
         Schema::create('website_branches', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('name')->nullable()->comment('ชื่อเว็บไซต์');
             $table->string('address')->nullable()->comment('ที่อยู่');
             $table->string('phone')->nullable()->comment('เบอร์โทรศัพท์');

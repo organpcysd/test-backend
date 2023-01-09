@@ -79,7 +79,7 @@ class ReviewController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.review.index',compact('websites'));
     }
 

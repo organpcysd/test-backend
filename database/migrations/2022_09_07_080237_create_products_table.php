@@ -31,12 +31,12 @@ class CreateProductsTable extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('website_id')->nullable()->comment('เว็บไซต์');
-            $table->unsignedBigInteger('product_category_id')->nullalble()->comment('หมวดหมู่หลัก');
-            $table->unsignedBigInteger('sub_product_category_id')->nullalble()->comment('หมวดหมู่ย่อย');
+            $table->unsignedBigInteger('product_category_id')->nullalble()->comment('หมวดหมู่');
+            // $table->unsignedBigInteger('sub_product_category_id')->nullalble()->comment('หมวดหมู่ย่อย');
 
             $table->foreign('website_id')->references('id')->on('websites')->onDelete('cascade');
             $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
-            $table->foreign('sub_product_category_id')->references('id')->on('sub_product_categories');
+            // $table->foreign('sub_product_category_id')->references('id')->on('sub_product_categories');
         });
     }
 

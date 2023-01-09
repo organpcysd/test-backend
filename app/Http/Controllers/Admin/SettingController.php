@@ -26,7 +26,7 @@ class SettingController extends Controller
         if(Auth::user()->hasAnyRole('superadmin','admin')){
             return view('admin.settings.backend.index');
         }else{
-            return redirect()->route('settings.edit',['setting' => Auth::user()->id]);
+            return redirect()->route('settings.edit',['setting' => Auth::user()->website->slug]);
         }
     }
 

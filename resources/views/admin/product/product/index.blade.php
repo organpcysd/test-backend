@@ -17,7 +17,7 @@
             {{ $pagename }}
             @if(Auth::user()->hasAnyRole('superadmin','admin'))
                 <div class="float-right">
-                    <select id="custom-search-input-select" class="form-control form-control-sm">
+                    <select id="custom-search-input-select" class="sel2 form-control form-control-sm"  style="width:180px;">
                         <option value="">ทั้งหมด</option>
                         @foreach ($websites as $item)
                             <option>{{ $item->name }}</option>
@@ -39,8 +39,8 @@
                         <th class="text-center">เว็บไซต์</th>
                         <th class="text-center">รูปภาพ</th>
                         <th class="text-center">สินค้า</th>
-                        <th class="text-center">หมวดหมู่หลัก</th>
-                        <th class="text-center">หมวดหมู่ย่อย</th>
+                        <th class="text-center">หมวดหมู่</th>
+                        {{-- <th class="text-center">หมวดหมู่ย่อย</th> --}}
                         <th class="text-center">สินค้าโปรโมชั่น</th>
                         <th class="text-center">สินค้าขายดี</th>
                         <th class="text-center">สินค้าแนะนำ</th>
@@ -80,8 +80,8 @@
                 serverSide: true,
                 ajax: "",
                 columnDefs: [
-					{className: 'text-center', targets: [0,2,5,6,7,8,9,10,11]},
-					{orderable: false,	targets: [2,8,9,10,11]},
+					{className: 'text-center', targets: [0,2,5,6,7,8,9,10]},
+					{orderable: false,	targets: [2,8,9,10]},
                     {visible: role, targets: [1]}
 				],
                 columns: [
@@ -90,7 +90,7 @@
                     {data: 'img', searchable: false},
                     {data: 'title'},
                     {data: 'category'},
-                    {data: 'subcategory'},
+                    // {data: 'subcategory'},
                     {data: 'promotion_status'},
                     {data: 'bestsell_status'},
                     {data: 'recommended_status'},

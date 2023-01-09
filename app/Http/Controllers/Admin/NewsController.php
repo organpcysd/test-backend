@@ -79,7 +79,7 @@ class NewsController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.news.index',compact('websites'));
     }
 
@@ -212,8 +212,8 @@ class NewsController extends Controller
             $news->website_id = Auth::user()->website_id;
         }
 
-        $news->short_detail = $short_detail;
-        $news->detail = $detail;
+        $news->short_detail = json_encode($short_detail);
+        $news->detail = json_encode($detail);
         $news->seo_keyword = $request->post('seo_keyword');
         $news->seo_description = $request->post('seo_description');
         $news->updated_at = Carbon::now();

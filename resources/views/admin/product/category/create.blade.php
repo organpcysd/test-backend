@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('category.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('productcategory.store') }}" enctype="multipart/form-data" id="form">
         @csrf
         <div class="card card-info card-outline">
             <div class="card-header" style="font-size: 20px;">
@@ -45,10 +45,11 @@
                                                     @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
                                                         <label class="form-label" selected>เว็บไซต์</label>
-                                                        <select name="website" class="form-control form-control-sm">
-                                                            <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
+                                                        <input type="text" class="form-control form-control-sm" value="{{ $websites->where('id',request()->get('website'))->first()->name }}" readonly>
+                                                        <select name="website" id="website" class="form-control form-control-sm" style="display: none;">
+                                                            <option disabled selected>--- เลือกเว็บไซต์ ---</option>
                                                             @foreach($websites as $item)
-                                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                                <option value="{{$item->id}}" @if(request()->get('website')) @if(request()->get('website') == $item->id) selected @endif @endif > {{$item->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -57,6 +58,19 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">ชื่อหมวดหมู่</label>
                                                     <input type="text" class="form-control form-control-sm" name="title_th" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">หมวดหมู่ย่อยของ</label>
+                                                    <select name="parent" id="" class="form-control form-control-sm">
+                                                        <option value="">-- ไม่มีหมวดหมู่หลัก --</option>
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category->id }}">{{ json_decode($category->title)->th }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">รายละเอียด</label>
+                                                    <textarea name="detail_th" id="detail_th" class="form-control" rows="3"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,6 +81,10 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">ชื่อหมวดหมู่</label>
                                                     <input type="text" class="form-control form-control-sm" name="title_en">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">รายละเอียด</label>
+                                                    <textarea name="detail_en" id="detail_en" class="form-control" rows="3"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,13 +121,27 @@
 </div>
 @section('plugins.Sweetalert2', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
-@section('plugins.CustomFileInput', true)
 
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init()
+    $('#form').submit(function() {
+        role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
+
+        if($('#website').val() == null && role === true){
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.info('กรุณาเลือกเว็บไซต์');
+            return false;
+        }
     });
 
     $('#showimg1').click(function () {

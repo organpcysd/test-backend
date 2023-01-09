@@ -14,15 +14,11 @@
 
     {{-- Title --}}
     <title>
-        @yield('title_prefix', config('adminlte.title_prefix', ''))
-        @yield('title', config('adminlte.title', 'AdminLTE 3'))
-        @yield('title_postfix', config('adminlte.title_postfix', ''))
+        {{-- @yield('title_prefix', config('adminlte.title_prefix', '')) --}}
+        {{-- @yield('title', config('adminlte.title', 'AdminLTE 3')) --}}
+        {{-- @yield('title_postfix', config('adminlte.title_postfix', '')) --}}
+        @yield('title', setting('title'))
     </title>
-
-    {{-- Font Awesome 6.2.0 --}}
-    <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('fontawesome/css/brands.css') }}" rel="stylesheet">
-    <link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">
 
     {{-- <script src="https://kit.fontawesome.com/4134f7c670.js" crossorigin="anonymous"></script> --}}
     <link href='https://fonts.googleapis.com/css?family=Kanit:400,300&subset=thai,latin' rel='stylesheet' type='text/css'>
@@ -30,9 +26,6 @@
 
     {{-- Text Editor --}}
     <script src="https://cdn.tiny.cloud/1/b45ns822wglixl75gol486a00kvm8ummsvel4lwy8n6ylpmx/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
-    {{-- Dropzone --}}
-    <link rel="stylesheet" href="{{ asset('plugins/dropzone/dropzone.css') }}">
 
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')
@@ -91,11 +84,17 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
     <style>
-        /* SIdebar */
+        /* Sidebar */
         .nav-header {
+<<<<<<< Updated upstream
             color: #000000 !important;
             background: #F3F3F3 !important;
             padding: -1rem !important;
+=======
+            color: #212529 !important;
+            background: #F3F3F3 !important;
+            padding: .5rem !important;
+>>>>>>> Stashed changes
             border: 0 !important;
         }
         .nav-pills .nav-link{
@@ -105,13 +104,17 @@
             color: #ffffff
         }
 
-        .sidebar {
+		.sidebar {
             padding-left: 0 !important ;
             padding-right: 0 !important ;
         }
 
         .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
             width: auto !important;
+        }
+
+        .nav-pills .nav-link{
+            border-radius : 0rem !important;
         }
 
         /* Toggle Switch */
@@ -213,9 +216,6 @@
         @endif
     @endif
 
-    {{-- Dropzone --}}
-    <script src="{{ asset('plugins/dropzone/dropzone.js') }}"></script>
-
     {{-- SummerNote --}}
     <link href="{{ asset('plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/summernote/plugin/tam-emoji/css/emoji.css') }}" rel="stylesheet">
@@ -235,6 +235,8 @@
 
         //SummerNote
         $(document).ready(function() {
+            $('.sel2').select2();
+            bsCustomFileInput.init();
             // emojione.ascii = true;
             $('.summernote').summernote({
                 tabsize: 2,

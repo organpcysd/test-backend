@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Service extends Model
+class Service extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;

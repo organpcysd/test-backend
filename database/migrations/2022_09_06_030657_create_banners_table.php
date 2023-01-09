@@ -15,6 +15,7 @@ class CreateBannersTable extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('title')->comment('ชื่อแบนเนอร์');
             $table->boolean('publish')->default(1)->comment('เผยแพร่');
             $table->integer('sort')->default(0)->comment('ลำดับ');

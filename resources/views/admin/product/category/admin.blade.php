@@ -20,16 +20,13 @@
             <div class="float-right">
                 <input type="search" id="custom-search-input" class="form-control form-control-sm" placeholder="ค้นหา">
             </div>
-            <a href="{{ route('website.create') }}" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
             <table id="table" class="table table-striped table-hover table-sm dataTable no-footer dtr-inline nowrap"
                 style="width: 100%;">
                 <thead>
                     <tr>
                         <th class="text-center">##</th>
                         <th class="text-center">ชื่อเว็บไซต์</th>
-                        <th class="text-center" style="width: 15%;">รหัสเว็บไซต์</th>
-                        <th class="text-center" style="width: 15%;">สถานะ</th>
-                        <th class="text-center" style="width: 15%;">จัดการ</th>
+                        <th class="text-center">จัดการ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,14 +57,12 @@
                 serverSide: true,
                 ajax: "",
                 columnDefs: [
-					{className: 'text-center', targets: [0,2,3,4]},
-					{orderable: false,	targets: [4]}
+					{className: 'text-center', targets: [0,2]},
+					{orderable: false,	targets: [2]}
 				],
                 columns: [
                     {data: 'DT_RowIndex', name: 'id'} ,
                     {data: 'name'},
-                    {data: 'website_code'},
-                    {data: 'publish'},
                     {data: 'btn'},
                 ],
                 "dom": 'rtip',
@@ -78,21 +73,6 @@
         $('#custom-search-input').keyup(function(){
             table.search($(this).val()).draw();
         })
-
-        //copy
-        function copy(ele){
-            value = $(ele).text();
-            navigator.clipboard.writeText(value);
-            Swal.fire({
-                icon: 'success',
-                title: 'คัดลอกแล้ว',
-                position: 'top-right',
-                toast: true,
-                timer: 1000,
-                showCancelButton: false,
-                showConfirmButton: false
-            });
-        }
 
 </script>
 @endpush

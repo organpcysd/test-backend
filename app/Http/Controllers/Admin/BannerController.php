@@ -75,7 +75,7 @@ class BannerController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.banner.index',compact('websites'));
     }
 

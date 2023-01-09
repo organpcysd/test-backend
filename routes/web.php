@@ -62,17 +62,21 @@ Route::group(['middleware' => ['is_active']], function () {
             Route::get('/product/bestsell/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'bestsell'])->name('product.bestsell');
             Route::get('/product/recommended/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'recommended'])->name('product.recommended');
 
-            Route::get('/product/getSubcategory/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'getSubcategory'])->name('product.getSubcategory');
+            Route::get('/product/getCategory/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'getCategory'])->name('product.getCategory');
+
+            // Route::get('/product/getSubcategory/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'getSubcategory'])->name('product.getSubcategory');
 
 
-            Route::resource('/category', App\Http\Controllers\Admin\ProductCategoryController::class);
-            Route::get('/category/publish/{id}', [\App\Http\Controllers\Admin\ProductCategoryController::class, 'publish'])->name('category.publish');
-            Route::get('/category/sort/{id}', [App\Http\Controllers\Admin\ProductCategoryController::class, 'sort'])->name('category.sort');
+            Route::resource('/productcategory', App\Http\Controllers\Admin\ProductCategoryController::class);
+            Route::get('/productcategory/publish/{id}', [\App\Http\Controllers\Admin\ProductCategoryController::class, 'publish'])->name('category.publish');
+            Route::get('/productcategory/sort/{id}', [App\Http\Controllers\Admin\ProductCategoryController::class, 'sort'])->name('category.sort');
 
-            Route::resource('/subcategory', App\Http\Controllers\Admin\SubProductCategoryController::class);
-            Route::get('/subcategory/getCategory/{id}', [\App\Http\Controllers\Admin\SubProductCategoryController::class, 'getCategory'])->name('subcategory.getCategory');
-            Route::get('/subcategory/publish/{id}', [\App\Http\Controllers\Admin\SubProductCategoryController::class, 'publish'])->name('subcategory.publish');
-            Route::get('/subcategory/sort/{id}', [App\Http\Controllers\Admin\SubProductCategoryController::class, 'sort'])->name('subcategory.sort');
+            // Route::resource('/subcategory', App\Http\Controllers\Admin\SubProductCategoryController::class);
+            // Route::get('/subcategory/getCategory/{id}', [\App\Http\Controllers\Admin\SubProductCategoryController::class, 'getCategory'])->name('subcategory.getCategory');
+            // Route::get('/subcategory/publish/{id}', [\App\Http\Controllers\Admin\SubProductCategoryController::class, 'publish'])->name('subcategory.publish');
+            // Route::get('/subcategory/sort/{id}', [App\Http\Controllers\Admin\SubProductCategoryController::class, 'sort'])->name('subcategory.sort');
+
+            // Route::resource('/newcategory', App\Http\Controllers\Admin\CategoryController::class);
         });
 
         Route::group(['middleware' => ['can:review']], function () {
@@ -98,6 +102,7 @@ Route::group(['middleware' => ['is_active']], function () {
 
         Route::group(['middleware' => ['can:website']], function () {
             Route::resource('/website', App\Http\Controllers\Admin\WebsiteController::class);
+            Route::get('/website/publish/{id}', [\App\Http\Controllers\Admin\WebsiteController::class, 'publish'])->name('website.publish');
         });
 
         Route::group(['middleware' => ['can:website-branch']], function () {

@@ -14,15 +14,16 @@ class ProductCategory extends Model implements HasMedia
     use InteractsWithMedia;
     use Sluggable;
 
-    protected $table = 'product_categories';
+    protected $guarded = ['id'];
 
     protected $fillable = [
         'title',
         'detail',
+        'website_id',
         'slug',
         'publish',
         'sort',
-        'website_id'
+        'parent_id',
     ];
 
     public function sluggable()
@@ -34,17 +35,40 @@ class ProductCategory extends Model implements HasMedia
         ];
     }
 
-    public function getRouteKeyName(){
-        return 'slug';
-    }
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('product_category');
     }
 
-    public function sub_product_category(){
-        return $this->hasMany(SubProductCategory::class,'id','sub_product_category_id');
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+    public static function tree()
+    {
+        $allCategories = ProductCategory::get();
+
+        $rootCategories = $allCategories->whereNull('parent_id');
+
+        self::formatTree($rootCategories, $allCategories);
+
+        return $rootCategories;
+    }
+
+    private static function formatTree($categories, $allCategories)
+    {
+        foreach ($categories as $category) {
+            $category->children = $allCategories->where('parent_id', $category->id)->values();
+
+            if($category->children->isNotEmpty()) {
+                self::formatTree($category->children, $allCategories);
+            }
+        }
+    }
+
+    public function isChild(): bool
+    {
+        return $this->parent_id != null;
     }
 
     public function product(){

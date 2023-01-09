@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('faqcategory.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('faqcategory.store') }}" enctype="multipart/form-data" id="form">
         @csrf
         <div class="card card-info card-outline">
             <div class="card-header" style="font-size: 20px;">
@@ -44,8 +44,8 @@
                                                 <div class="mb-3">
                                                     @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
-                                                        <label class="form-label" selected>เว็บไซต์</label>
-                                                        <select name="website" class="form-control form-control-sm">
+                                                        <label class="form-label" selected>เว็บไซต์</label> <br/>
+                                                        <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
                                                             <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
                                                             @foreach($websites as $item)
                                                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -90,4 +90,26 @@
 @section('plugins.Sweetalert2', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 
+@push('js')
+<script>
+    $('#form').submit(function() {
+        role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
+
+        if($('#website').val() == null && role === true){
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.info('กรุณาเลือกเว็บไซต์');
+            return false;
+        }
+    });
+</script>
+@endpush
 @endsection

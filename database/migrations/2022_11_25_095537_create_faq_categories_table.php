@@ -15,6 +15,7 @@ class CreateFaqCategoriesTable extends Migration
     {
         Schema::create('faq_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('title')->comment('หมวดหมู่คำถาม');
             $table->boolean('publish')->nullable()->default(1)->comment('เผยแพร่');
             $table->integer('sort')->nullable()->default(0)->comment('ลำดับ');
@@ -27,6 +28,7 @@ class CreateFaqCategoriesTable extends Migration
 
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('question')->comment('คำถาม');
             $table->longText('answer')->comment('คำตอบ');
             $table->boolean('publish')->nullable()->default(1)->comment('เผยแพร่');

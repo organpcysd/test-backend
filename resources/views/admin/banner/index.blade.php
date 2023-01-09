@@ -17,7 +17,7 @@
             {{ $pagename }}
             @if(Auth::user()->hasAnyRole('superadmin','admin'))
                 <div class="float-right">
-                    <select id="custom-search-input-select" class="form-control form-control-sm">
+                    <select id="custom-search-input-select" class="sel2 form-control form-control-sm"  style="width:180px;">
                         <option value="">ทั้งหมด</option>
                         @foreach ($websites as $item)
                             <option>{{ $item->name }}</option>
@@ -61,6 +61,9 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var table;
         $(document).ready( function () {
+
+            role = {{ Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' }};
+
             table = $('#table').DataTable({
                 pageLength: 50,
                 responsive: true,
@@ -74,7 +77,8 @@
                 ajax: "",
                 columnDefs: [
 					{className: 'text-center', targets: [0,3,4,5,6]},
-					{orderable: false,	targets: [2,3,4,5,6]}
+					{orderable: false,	targets: [2,3,4,5,6]},
+                    {visible: role, targets: [1]}
 				],
                 columns: [
                     {data: 'DT_RowIndex', name: 'id'} ,

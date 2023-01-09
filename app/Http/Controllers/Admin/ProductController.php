@@ -12,7 +12,7 @@ use Image;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\ProductCategory;
-use App\Models\SubProductCategory;
+// use App\Models\SubProductCategory;
 use App\Models\Product;
 use App\Models\Website;
 
@@ -56,15 +56,15 @@ class ProductController extends Controller
                     $category = json_decode($data->product_category->title)->th;
                     return $category;
                 })
-                ->addColumn('subcategory', function($data){
-                    $subcategory = '';
+                // ->addColumn('subcategory', function($data){
+                //     $subcategory = '';
 
-                    if($data['sub_product_category_id']){
-                        $subcategory = json_decode($data->sub_product_category->title)->th;
-                    }
+                //     if($data['sub_product_category_id']){
+                //         $subcategory = json_decode($data->sub_product_category->title)->th;
+                //     }
 
-                    return $subcategory;
-                })
+                //     return $subcategory;
+                // })
                 ->addColumn('promotion_status',function ($data){
                     if($data['promotion_status']){
                         $promotion_status = '<label class="switch"> <input type="checkbox" checked value="0" id="' . $data['id'] . '" onchange="promotion(`'. url('admin/product/promotion') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
@@ -114,7 +114,7 @@ class ProductController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.product.product.index',compact('websites'));
     }
 
@@ -127,15 +127,15 @@ class ProductController extends Controller
     {
         if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = ProductCategory::where('publish',1)->get();
-            $subcategories = SubProductCategory::where('publish',1)->get();
+            // $subcategories = SubProductCategory::where('publish',1)->get();
         }else{
             $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
-            $subcategories = SubProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
+            // $subcategories = SubProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
         }
 
         $websites = Website::all();
 
-        return view('admin.product.product.create',compact('categories','subcategories','websites'));
+        return view('admin.product.product.create',compact('categories','websites'));
     }
 
     /**
@@ -164,7 +164,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->product_category_id = $request->category;
-        $product->sub_product_category_id = $request->subcategory;
+        // $product->sub_product_category_id = $request->subcategory;
         $product->title = json_encode($title);
         $product->short_detail = json_encode($short_detail);
         $product->detail = json_encode($detail);
@@ -220,10 +220,10 @@ class ProductController extends Controller
     {
         if(Auth::user()->hasAnyRole('superadmin','admin')){
             $categories = ProductCategory::where('website_id',$product->website_id)->where('publish',1)->get();
-            $subcategories = SubProductCategory::where('product_category_id',$product->product_category_id)->where('website_id',$product->website_id)->where('publish',1)->get();
+            // $subcategories = SubProductCategory::where('product_category_id',$product->product_category_id)->where('website_id',$product->website_id)->where('publish',1)->get();
         }else{
             $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
-            $subcategories = SubProductCategory::where('product_category_id',$product->product_category_id)->where('website_id',Auth::user()->website_id)->where('publish',1)->get();
+            // $subcategories = SubProductCategory::where('product_category_id',$product->product_category_id)->where('website_id',Auth::user()->website_id)->where('publish',1)->get();
         }
 
         $medias = $product->getMedia('product');
@@ -232,7 +232,7 @@ class ProductController extends Controller
         });
 
         $websites = Website::all();
-        return view('admin.product.product.edit',compact('product','categories','subcategories','images','websites'));
+        return view('admin.product.product.edit',compact('product','categories','images','websites'));
     }
 
     /**
@@ -261,10 +261,10 @@ class ProductController extends Controller
 
         $product = Product::whereId($id)->first();
         $product->product_category_id = $request->category;
-        $product->sub_product_category_id = $request->subcategory;
-        $product->title = $title;
-        $product->detail = $detail;
-        $product->short_detail = $short_detail;
+        // $product->sub_product_category_id = $request->subcategory;
+        $product->title = json_encode($title);
+        $product->detail = json_encode($detail);
+        $product->short_detail = json_encode($short_detail);
         $product->price = $request->price;
         $product->price_promotion = $request->price_promotion;
         $product->seo_keyword = $request->seo_keyword;
@@ -332,11 +332,16 @@ class ProductController extends Controller
         return response()->json(['status' => $status, 'msg' => $msg]);
     }
 
-    public function getSubcategory($id){
-        $subcategories = SubProductCategory::where('product_category_id',$id)->get();
-
-        return response()->json(['subcategories' => $subcategories]);
+    public function getCategory($id){
+        $categories = ProductCategory::where('website_id',$id)->get();
+        return response()->json(['categories' => $categories]);
     }
+
+    // public function getSubcategory($id){
+    //     $subcategories = SubProductCategory::where('product_category_id',$id)->get();
+
+    //     return response()->json(['subcategories' => $subcategories]);
+    // }
 
     public function publish($id)
     {

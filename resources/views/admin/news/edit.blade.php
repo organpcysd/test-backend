@@ -131,15 +131,10 @@
     </form>
 </div>
 @section('plugins.Sweetalert2', true)
-@section('plugins.CustomFileInput', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init()
-    });
-
     $('#showimg').click(function () {
             $('#imgInp').trigger('click');
     });

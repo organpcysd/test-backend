@@ -20,6 +20,7 @@
          alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
          class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}"
          style="opacity:.8"> --}}
+    <img src="{{ asset(setting('img_logo')) }}" class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}">
 
     {{-- Brand text --}}
     <span class="brand-text {{ config('adminlte.classes_brand_text') }}">

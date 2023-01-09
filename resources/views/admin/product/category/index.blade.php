@@ -14,39 +14,42 @@
 
     <div class="card card-info card-outline">
         <div class="card-header" style="font-size: 20px;">
-            {{ $pagename }}
-            @if(Auth::user()->hasAnyRole('superadmin','admin'))
-                <div class="float-right">
-                    <select id="custom-search-input-select" class="form-control form-control-sm">
-                        <option value="">ทั้งหมด</option>
-                        @foreach ($websites as $item)
-                            <option>{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            @endif
+            {{ $pagename }} @if(request()->get('website')) {{ ' : ' . $websites->where('id',request()->get('website'))->first()->name }}  @endif
         </div>
         <div class="card-body">
-            <div class="float-right">
-                <input type="search" id="custom-search-input" class="form-control form-control-sm" placeholder="ค้นหา">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="@if(request()->get('website')) {{ route('productcategory.create',['website' => request()->get('website')]) }} @else {{ route('productcategory.create') }} @endif" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
+                    <x-categories :categories="$categories"/>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card mb-0">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0">
+                                        <button class="btn btn-link float-right" type="button" data-toggle="collapse" data-target="#headingThree" aria-expanded="false"> ➕ </button>
+                                        <a>เทส</a>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="card collapse mb-0" id="headingThree">
+                                    <div class="card-header" >
+                                        <h5 class="mb-0">
+                                        <button class="btn btn-link float-right collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+                                            ➕
+                                        </button>
+                                        <a class="ml-3">เทส</a>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <a href="{{ route('category.create') }}" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
-            <table id="table" class="table table-striped table-hover table-sm dataTable no-footer dtr-inline nowrap"
-                style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="text-center">##</th>
-                        <th class="text-center">เว็บไซต์</th>
-                        <th class="text-center">หมวดหมู่</th>
-                        <th class="text-center">รูปภาพ</th>
-                        <th class="text-center">การมองเห็น</th>
-                        <th class="text-center" style="width: 10%">ลำดับ</th>
-                        <th class="text-center">จัดการ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
@@ -58,48 +61,45 @@
 @push('js')
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    var table;
-        $(document).ready( function () {
 
-            role = {{ Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' }};
-
-            table = $('#table').DataTable({
-                pageLength: 50,
-                responsive: true,
-                processing: true,
-                scrollX: true,
-                scrollCollapse: true,
-                language: {
-                    url: "{{ asset('vendor/datatables/th.json') }}",
+    function productcategory_confirmdelete(url){
+    Swal.fire({
+        title: 'ต้องการลบใช่หรือไม่',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ตกลง',
+        cancelButtonText: 'ยกเลิก',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                data: {
+                    _token: CSRF_TOKEN
                 },
-                serverSide: true,
-                ajax: "",
-                columnDefs: [
-					{className: 'text-center', targets: [0,3,4,5,6]},
-					{orderable: false,	targets: [3,4,5,6]},
-                    {visible: role, targets: [1]}
-				],
-                columns: [
-                    {data: 'DT_RowIndex', name: 'id'},
-                    {data: 'website'},
-                    {data: 'title'},
-                    {data: 'img', searchable: false},
-                    {data: 'publish'},
-                    {data: 'sorting'},
-                    {data: 'btn'},
-                ],
-                "dom": 'rtip',
+                dataType: 'JSON',
+                success: function(response) {
+                    if (response.status === true) {
+                        Swal.fire({
+                            title: response.msg,
+                            icon: 'success',
+                            timeout: 2000,
+                        });
+                        table.ajax.reload();
+                    } else {
+                        Swal.fire({
+                            title: response.msg,
+                            icon: 'error',
+                            timeout: 2000,
+                        });
+                    }
+                }
             });
-        });
 
-        //custom search datatable
-        $('#custom-search-input').keyup(function(){
-            table.search($(this).val()).draw();
-        })
-
-        $('#custom-search-input-select').change(function(){
-            table.search($(this).val()).draw() ;
-        })
+        }
+    });
+    }
 </script>
 @endpush
 @endsection

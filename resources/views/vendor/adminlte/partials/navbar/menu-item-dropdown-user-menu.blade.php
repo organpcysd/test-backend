@@ -22,8 +22,8 @@
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
         @endif
-        <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            {{ Auth::user()->name }} <i class="fa fa-fw fa-chevron-circle-down"></i>
+        <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline text-white" @endif>
+            {{ Auth::user()->name }} <i class="fa fa-fw fa-chevron-circle-down text-white"></i>
         </span>
     </a>
 

@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $permissions = Permission::all();
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
 
         return view('admin.user.create',compact('roles','permissions','websites'));
     }
@@ -157,7 +157,7 @@ class UserController extends Controller
         $user = User::whereId($id)->first();
         $roles = Role::all();
         $permissions = Permission::all();
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
 
         return view('admin.user.edit',compact('user','roles','permissions','websites'));
     }

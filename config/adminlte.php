@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => '',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -187,15 +187,24 @@ return [
     */
 
     'classes_body' => 'text-sm',
+<<<<<<< Updated upstream
     'classes_brand' => 'text-center bg-info',
     'classes_brand_text' => '',
+=======
+    'classes_brand' => 'bg-info',
+    'classes_brand_text' => 'text-white',
+>>>>>>> Stashed changes
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-light-info elevation-4',
     'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-info navbar-light text-white',
+<<<<<<< Updated upstream
     'classes_topnav_nav' => 'navbar-expand-md',
+=======
+    'classes_topnav_nav' => 'navbar-expand text-white',
+>>>>>>> Stashed changes
     'classes_topnav_container' => 'container',
 
     /*
@@ -291,10 +300,10 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
 
         // Sidebar items:
         [
@@ -317,22 +326,47 @@ return [
             'icon'        => 'fa-solid fa-newspaper',
             'route'         => 'news.index',
             'active'      => ['*news*'],
-            'can'         => 'news'
+            'can'         => 'news',
         ],
         [
             'text'        => 'โปรโมชั่น',
             'icon'        => 'fa-solid fa-bullhorn',
             'route'         => 'promotion.index',
             'active'      => ['*promotion*'],
-            'can'         => 'promotion'
+            'can'         => 'promotion',
         ],
         [
             'text'        => 'บริการของเรา',
             'icon'        => 'fa-solid fa-headset',
             'route'         => 'service.index',
             'active'      => ['*service*'],
-            'can'         => 'service'
+            'can'         => 'service',
         ],
+        // [
+        //     'text'    => 'สินค้า',
+        //     'icon'    => 'fas fa-fw fa-boxes',
+        //     'can'     => 'product',
+        //     'submenu' => [
+        //         [
+        //             'text'  => 'หมวดหมู่',
+        //             'route' => 'category.index',
+        //             'active'      => ['regex:@^category/[a-z]+$@'],
+        //             'can'   => 'product',
+        //         ],
+        //         [
+        //             'text'  => 'หมวดหมู่ย่อย',
+        //             'route' => 'subcategory.index',
+        //             'active'      => ['*subcategory*'],
+        //             'can'   => 'product',
+        //         ],
+        //         [
+        //             'text'  => 'สินค้า',
+        //             'route' => 'product.index',
+        //             'active'      => ['*product*'],
+        //             'can'   => 'product',
+        //         ],
+        //     ],
+        // ],
         [
             'text'    => 'สินค้า',
             'icon'    => 'fas fa-fw fa-boxes',
@@ -340,20 +374,14 @@ return [
             'submenu' => [
                 [
                     'text'  => 'หมวดหมู่',
-                    'route' => 'category.index',
-                    'active'      => ['regex:@^category/[a-z]+$@'],
-                    'can'   => 'product',
-                ],
-                [
-                    'text'  => 'หมวดหมู่ย่อย',
-                    'route' => 'subcategory.index',
-                    'active'      => ['*subcategory*'],
+                    'route' => 'productcategory.index',
+                    'active'      => ['productcategory','*productcategory/create*','*productcategory/*/edit*'],
                     'can'   => 'product',
                 ],
                 [
                     'text'  => 'สินค้า',
                     'route' => 'product.index',
-                    'active'      => ['*product*'],
+                    'active'      => ['product','*product/create*','*product/*/edit*'],
                     'can'   => 'product',
                 ],
             ],
@@ -371,15 +399,15 @@ return [
             'can'     => 'faq',
             'submenu' => [
                 [
-                    'text'  => 'หมวดหมู่ถาม-ตอบ',
+                    'text'  => 'หมวดหมู่',
                     'route' => 'faqcategory.index',
-                    'active'      => ['*faqcategory*'],
+                    'active'      => ['faqcategory','*faqcategory/create*','*faqcategory/*/edit*'],
                     'can'   => 'faq',
                 ],
                 [
                     'text'  => 'คำถาม-ตอบ',
                     'route' => 'faq.index',
-                    'active'      => ['*faq*'],
+                    'active'      => ['faq','*faq/create*','*faqcategory/*/edit*'],
                     'can'   => 'faq',
                 ],
             ],
@@ -499,13 +527,133 @@ return [
                 ],
             ],
         ],
+        'Dropzone' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'plugins/dropzone/dropzone.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'plugins/dropzone/dropzone.css',
+                ],
+            ],
+        ],
+        'FontAwesomeV5' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'fontawesome/css/fontawesome.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'fontawesome/css/brands.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'fontawesome/css/solid.css',
+                ],
+            ],
+        ],
+        'SummerNote' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'plugins/summernote/summernote-bs4.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'plugins/summernote/plugin/tam-emoji/css/emoji.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'plugins/summernote/summernote-bs4.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'plugins/summernote/plugin/tam-emoji/js/config.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'plugins/summernote/plugin/tam-emoji/js/tam-emoji.min.js',
+                ],
+            ],
+        ],
         'Chartjs' => [
             'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => '//cdn.jsdelivr.net/npm/chart.js',
+                ],
+            ],
+        ],
+        'MomentJs' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js',
+                ],
+            ],
+        ],
+        'JqueryUI' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js',
+                ],
+            ],
+        ],
+        'jsTree' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js',
+                ],
+            ],
+        ],
+        'SortableJs' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js',
                 ],
             ],
         ],
@@ -556,6 +704,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js',
+                ],
+            ],
+        ],
+        'Toastr' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js',
                 ],
             ],
         ],

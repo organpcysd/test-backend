@@ -80,7 +80,7 @@ class ServiceController extends Controller
                 ->make(true);
         }
 
-        $websites = Website::all();
+        $websites = Website::where('publish',1)->get();
         return view('admin.service.index',compact('websites'));
     }
 
@@ -206,7 +206,7 @@ class ServiceController extends Controller
         ];
 
         $service = Service::whereId($id)->first();
-        $service->title = $title;
+        $service->title = json_encode($title);
 
         if($request->website){
             $service->website_id = $request->website;
@@ -214,8 +214,8 @@ class ServiceController extends Controller
             $service->website_id = Auth::user()->website_id;
         }
 
-        $service->short_detail = $short_detail;
-        $service->detail = $detail;
+        $service->short_detail = json_encode($short_detail);
+        $service->detail = json_encode($detail);
         $service->seo_keyword = $request->post('seo_keyword');
         $service->seo_description = $request->post('seo_description');
         $service->updated_at = Carbon::now();

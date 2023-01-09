@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->nullable();
             $table->string('name')->nullable()->comment('ชื่อ');
             $table->boolean('status')->default(1)->comment('สถานะการใช้งาน (0, 1)');
             $table->string('username')->unique()->comment('ชื่อผู้ใช้');

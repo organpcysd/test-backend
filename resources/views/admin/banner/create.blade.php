@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('banner.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('banner.store') }}" enctype="multipart/form-data" id="form">
         @csrf
         <div class="card card-info card-outline">
             <div class="card-header" style="font-size: 20px;">
@@ -24,8 +24,8 @@
                     <div class="col-sm-6">
                         @if(Auth::user()->hasAnyRole('superadmin','admin'))
                         <div class="mb-3">
-                            <label class="form-label" selected>เว็บไซต์</label>
-                            <select name="website" class="form-control form-control-sm">
+                            <label class="form-label" selected>เว็บไซต์</label> <br/>
+                            <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
                                 <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
                                 @foreach($websites as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
@@ -47,7 +47,7 @@
                                     <span class="text-danger">**รูปภาพขนาด 1920x700 pixel**</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input name="img" type="file" class="custom-file-input" id="imgInp1" accept="image/*" onchange="return fileValidation(this)">
+                                    <input name="img" type="file" class="custom-file-input" id="imgInp1" accept="image/*" onchange="return fileValidation(this)" required>
                                     <label class="custom-file-label" for="customFile">เลือกไฟล์</label>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                     <span class="text-danger">**รูปภาพขนาด 500x700 pixel**</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input name="img2" type="file" class="custom-file-input" id="imgInp2" accept="image/*" onchange="return fileValidation(this)">
+                                    <input name="img2" type="file" class="custom-file-input" id="imgInp2" accept="image/*" onchange="return fileValidation(this)" required>
                                     <label class="custom-file-label" for="customFile">เลือกไฟล์</label>
                                 </div>
                             </div>
@@ -76,13 +76,28 @@
         </div>
     </form>
 </div>
+
 @section('plugins.Sweetalert2', true)
-@section('plugins.CustomFileInput', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 @push('js')
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init()
+    $('#form').submit(function() {
+        role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
+
+        if($('#website').val() == null && role === true){
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.info('กรุณาเลือกเว็บไซต์');
+            return false;
+        }
     });
 
     $('#showimg1').click(function () {

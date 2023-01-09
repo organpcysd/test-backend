@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Image;
 use Illuminate\Support\Facades\Auth;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 use App\Models\Website;
 use Spatie\Permission\Models\Role;
@@ -27,6 +28,18 @@ class WebsiteController extends Controller
             $data = Website::all();
             return DataTables::make($data)
                 ->addIndexColumn()
+                ->addColumn('publish',function ($data){
+                    if($data['publish']){
+                        $publish = '<label class="switch"> <input type="checkbox" checked value="0" id="' . $data['id'] . '" onchange="publish(`'. url('admin/website/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
+                    }else{
+                        $publish = '<label class="switch"> <input type="checkbox" value="1" id="'.$data['id'].'" onchange="publish(`'. url('admin/website/publish') . '/' . $data['id'].'`)"> <span class="slider round"></span> </label>';
+                    }
+                    return $publish;
+                })
+                ->addColumn('website_code',function ($data){
+                    $website_code = '<label class="text-info font-weight-normal" onclick="copy(this)">' . $data['website_code'] . '<i class="fas fa-paste ml-2"></i></label>';
+                    return $website_code;
+                })
                 ->addColumn('btn',function ($data){
                     $btn = '<a class="btn btn-sm btn-warning" href="'.route('website.edit',['website' => $data['id']]).'"><i
                         class="fa fa-pen"
@@ -38,7 +51,7 @@ class WebsiteController extends Controller
                         title="ลบข้อมูล"></i></button>';
                     return $btn;
                 })
-                ->rawColumns(['btn'])
+                ->rawColumns(['btn','publish','website_code'])
                 ->make(true);
         }
         return view('admin.website.index');
@@ -62,8 +75,22 @@ class WebsiteController extends Controller
      */
     public function store(Request $request)
     {
+        //pattern
+
+        //WB20230101
+        $config = [
+            'table' => 'websites',
+            'field' => 'website_code',
+            'length' => 10,
+            'prefix' => 'WB' . date('Y') . date('m')
+        ];
+        // now use it
+
+        $website_code = IdGenerator::generate($config);
+
         $website = new Website();
         $website->name = $request->name;
+        $website->website_code = $website_code;
         $website->domain_name = $request->domain_name;
         $website->title = $request->title;
         $website->address = $request->address;
@@ -566,5 +593,24 @@ class WebsiteController extends Controller
         }
 
         return response()->json(['status' => $status, 'msg' => $msg]);
+    }
+
+    public function publish($id)
+    {
+        $status = false;
+        $msg = 'บันทึกข้อมูลผิดพลาด';
+
+        $website = Website::whereId($id)->first();
+        if($website->publish == 1) {
+            $website->publish = 0;
+        }else{
+            $website->publish = 1;
+        }
+
+        if($website->save()){
+            $status = true;
+            $msg = 'บันทึกข้อมูลเรียบร้อย';
+        }
+        return response()->json(['msg' => $msg, 'status' => $status]);
     }
 }

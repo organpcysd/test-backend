@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('product.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('product.store') }}" enctype="multipart/form-data" id="form">
         @csrf
         <div class="card card-info card-outline">
             <div class="card-header" style="font-size: 20px;">
@@ -43,8 +43,8 @@
                                             <div class="col-sm-12">
                                                 @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                 <div class="mb-3">
-                                                    <label class="form-label" selected>เว็บไซต์</label>
-                                                    <select name="website" class="form-control form-control-sm" id="website">
+                                                    <label class="form-label" selected>เว็บไซต์</label> <br/>
+                                                    <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
                                                         <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
                                                         @foreach($websites as $item)
                                                             <option value="{{$item->id}}">{{$item->name}}</option>
@@ -52,30 +52,30 @@
                                                     </select>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label">หมวดหมู่หลัก</label>
+                                                            <label class="form-label">หมวดหมู่</label>
                                                             <select class="form-control form-control-sm" name="category" id="category">
 
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    {{-- <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">หมวดหมู่ย่อย</label>
                                                             <select class="form-control form-control-sm" name="subcategory" id="subcategory">
-                                                                {{-- @foreach ($subcategories as $item)
+                                                                @foreach ($subcategories as $item)
                                                                     <option value="{{ $item->id }}">{{ json_decode($item->title)->th }}</option>
-                                                                @endforeach --}}
+                                                                @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 @else
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label">หมวดหมู่หลัก</label>
+                                                            <label class="form-label">หมวดหมู่</label>
                                                             <select class="form-control form-control-sm" name="category" id="category">
                                                                 <option selected disabled>--- เลือกหมวดหมู่หลัก ---</option>
                                                                 @foreach ($categories as $item)
@@ -84,16 +84,16 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    {{-- <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">หมวดหมู่ย่อย</label>
                                                             <select class="form-control form-control-sm" name="subcategory" id="subcategory">
-                                                                {{-- @foreach ($subcategories as $item)
+                                                                @foreach ($subcategories as $item)
                                                                     <option value="{{ $item->id }}">{{ json_decode($item->title)->th }}</option>
-                                                                @endforeach --}}
+                                                                @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 @endif
 
@@ -187,36 +187,54 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 
 <script>
+    $('#form').submit(function() {
+        role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
+
+        if($('#website').val() == null && role === true){
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.info('กรุณาเลือกเว็บไซต์');
+            return false;
+        }
+    });
+
     $('#website').on('change', function () {
         id = this.value;
         $.ajax({
             type: "get",
-            url: "{{ url('admin/subcategory/getCategory') }}/" +id,
+            url: "{{ url('admin/product/getCategory') }}/" +id,
             success: function (response) {
-                let option = "<option selected disabled>--- เลือกหมวดหมู่หลัก ---</option>";
+                let option = "<option selected disabled>--- เลือกหมวดหมู่ ---</option>";
                 response.categories.forEach(category => {
                     option += "<option value='"+ category.id + "'>" + JSON.parse(category.title).th + "</option>";
                 });
                 $('#category').html(option);
-                $('#subcategory').html('');
             }
         });
     });
 
-    $('#category').on('change', function () {
-        id = this.value;
-        $.ajax({
-            type: "get",
-            url: "{{ url('admin/product/getSubcategory') }}/" +id,
-            success: function (response) {
-                let option = "<option selected disabled>--- เลือกหมวดหมู่ย่อย ---</option>";
-                    response.subcategories.forEach(subcategory => {
-                        option += "<option value='"+ subcategory.id + "'>" + JSON.parse(subcategory.title).th + "</option>";
-                    });
-                    $('#subcategory').html(option);
-            }
-        });
-    });
+    // $('#category').on('change', function () {
+    //     id = this.value;
+    //     $.ajax({
+    //         type: "get",
+    //         url: "{{ url('admin/product/getSubcategory') }}/" +id,
+    //         success: function (response) {
+    //             let option = "<option selected disabled>--- เลือกหมวดหมู่ย่อย ---</option>";
+    //                 response.subcategories.forEach(subcategory => {
+    //                     option += "<option value='"+ subcategory.id + "'>" + JSON.parse(subcategory.title).th + "</option>";
+    //                 });
+    //                 $('#subcategory').html(option);
+    //         }
+    //     });
+    // });
 
     //Dropzone
     Dropzone.prototype.defaultOptions.dictRemoveFile = "<i class=\"fa fa-trash ml-auto mt-2 fa-1x text-danger\"></i> ลบรูปภาพ";

@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('review.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('review.store') }}" enctype="multipart/form-data" id="form">
         @csrf
         <div class="card card-info card-outline">
             <div class="card-header" style="font-size: 20px;">
@@ -44,8 +44,8 @@
                                                 <div class="mb-3">
                                                     @if(Auth::user()->hasAnyRole('superadmin','admin'))
                                                     <div class="mb-3">
-                                                        <label class="form-label" selected>เว็บไซต์</label>
-                                                        <select name="website" class="form-control form-control-sm">
+                                                        <label class="form-label" selected>เว็บไซต์</label> <br/>
+                                                        <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
                                                             <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
                                                             @foreach($websites as $item)
                                                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -151,48 +151,28 @@
     </form>
 </div>
 @section('plugins.Sweetalert2', true)
-@section('plugins.CustomFileInput', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function () {
-        bsCustomFileInput.init()
-    });
+    $('#form').submit(function() {
+        role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
 
-    $('#showimg').click(function () {
-            $('#imgInp').trigger('click');
-    });
-
-    function previewImg(id) {
-            const [file] = id.files
-            if (file) {
-                if(id.id === "imgInp"){
-                    showimg.src = URL.createObjectURL(file);
-                }
-            }
+        if($('#website').val() == null && role === true){
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.info('กรุณาเลือกเว็บไซต์');
+            return false;
         }
-
-        function fileValidation(ele) {
-            var fileInput = ele;
-            var filePath = fileInput.value;
-
-            // Allowing file type
-            var allowedExtensions = /(\.gif|\.png|\.jpeg|\.jpg)$/i;
-
-            if (!allowedExtensions.exec(filePath)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ผิดพลาด',
-                    text: 'ไฟล์ที่นำเข้าต้องเป็นไฟล์รูปภาพเท่านั้น',
-                    timer: 2000,
-                })
-                fileInput.value = '';
-                return false;
-            } else {
-                previewImg(fileInput);
-            }
-        }
+    });
 
         //Dropzone
 

@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('category.update',['category' => $category->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('productcategory.update',['productcategory' => $category->id]) }}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="card card-info card-outline">
@@ -60,6 +60,29 @@
                                                     <label class="form-label">ชื่อหมวดหมู่</label>
                                                     <input type="text" class="form-control form-control-sm" name="title_th" value="{{ json_decode($category->title)->th }}" required>
                                                 </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">หมวดหมู่ย่อยของ</label>
+                                                    <select name="parent" id="" class="form-control form-control-sm">
+                                                        <option value="">-- ไม่มีหมวดหมู่หลัก --</option>
+                                                        @foreach ($categories as $item)
+                                                            @if($item->id == $category->id)
+                                                                {{-- ถ้า id เดียวกันกับหมวดหมู่ที่กำลังแก้ไข ไม่ต้องโชว์ --}}
+                                                            @elseif($item->parent_id == $category->id)
+                                                                {{-- ถ้า parent_id เดียวกันกับหมวดหมู่ที่กำลังแก้ไข ไม่ต้องโชว์ --}}
+                                                            @elseif($item->id == $category->parent_id)
+
+                                                            @else
+                                                                <option value="{{ $item->id }}" @if($item->id == $category->parent_id) selected @endif>{{ json_decode($item->title)->th }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">รายละเอียด</label>
+                                                    <textarea name="detail_th" id="detail_th" class="form-control" rows="3">{{ ($category->detail) ? json_decode($category->detail)->th : '' }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,6 +92,11 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">ชื่อหมวดหมู่</label>
                                                     <input type="text" class="form-control form-control-sm" name="title_en" value="{{ json_decode($category->title)->en }}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">รายละเอียด</label>
+                                                    <textarea name="detail_en" id="detail_en" class="form-control" rows="3">{{ ($category->detail) ? json_decode($category->detail)->en : '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>

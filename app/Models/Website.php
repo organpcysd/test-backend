@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Website extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Sluggable;
 
     protected $table = 'websites';
+
     protected $fillable = [
         'name',
+        'website_code',
+        'slug',
         'domain_name',
         'title',
         'address',
@@ -39,6 +43,19 @@ class Website extends Model implements HasMedia
         'seo_keyword',
         'seo_description'
     ];
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
 
     public function registerMediaCollections(): void
     {
@@ -82,9 +99,9 @@ class Website extends Model implements HasMedia
         return $this->hasMany(ProductCategory::class,'id','website_id');
     }
 
-    public function sub_product_category() {
-        return $this->hasMany(SubProductCategory::class,'id','website_id');
-    }
+    // public function sub_product_category() {
+    //     return $this->hasMany(SubProductCategory::class,'id','website_id');
+    // }
 
     public function product() {
         return $this->hasMany(Product::class,'id','website_id');

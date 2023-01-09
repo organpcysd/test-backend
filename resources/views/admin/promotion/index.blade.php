@@ -17,7 +17,7 @@
             {{ $pagename }}
             @if(Auth::user()->hasAnyRole('superadmin','admin'))
                 <div class="float-right">
-                    <select id="custom-search-input-select" class="form-control form-control-sm">
+                    <select id="custom-search-input-select" class="sel2 form-control form-control-sm"  style="width:180px;">
                         <option value="">ทั้งหมด</option>
                         @foreach ($websites as $item)
                             <option>{{ $item->name }}</option>

@@ -17,7 +17,7 @@
     <meta name="keywords" content="@yield('meta_tag_keyword',setting('seo_keyword'))">
     <meta name="description" content="@yield('meta_tag_description',setting('seo_description'))">
 
-    {{-- Font Awesome 6.2.0 --}}
+    {{-- Font Awesome 5 --}}
     <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/brands.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome/css/solid.css') }}" rel="stylesheet">

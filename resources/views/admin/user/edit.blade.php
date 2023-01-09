@@ -96,7 +96,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">สิทธิ์เพิ่มเติม</label>
-                            <select name="permission[]" class="sel2 form-control form-control-sm" multiple style="width: 100%; height: 200px;">
+                            <select name="permission[]" class="form-control form-control-sm" multiple style="width: 100%; height: 200px;">
                                 @foreach($permissions as $item)
                                     <option value="{{$item->name}}" @if(in_array($item->name,$user->permissions->pluck('name')->ToArray())) selected @endif>{{$item->description}}</option>
                                 @endforeach
@@ -123,7 +123,6 @@
 @push('js')
     <script>
         $(document).ready(function () {
-            // $('.sel2').select2();
             var demo1 = $('select[name="permission[]"]').bootstrapDualListbox();
         });
 
