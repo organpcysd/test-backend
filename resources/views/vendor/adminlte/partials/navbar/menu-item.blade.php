@@ -5,10 +5,6 @@
     {{-- Search form --}}
     @include('adminlte::partials.navbar.menu-item-search-form')
 
-@elseif($navbarItemHelper->isLocal($item))
-
-@include('adminlte::partials.navbar.menu-localization')
-
 @elseif ($navbarItemHelper->isNotification($item))
 
     {{-- Notification link --}}
