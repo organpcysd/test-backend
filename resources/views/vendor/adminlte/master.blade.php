@@ -86,15 +86,9 @@
     <style>
         /* Sidebar */
         .nav-header {
-<<<<<<< Updated upstream
             color: #000000 !important;
             background: #F3F3F3 !important;
             padding: -1rem !important;
-=======
-            color: #212529 !important;
-            background: #F3F3F3 !important;
-            padding: .5rem !important;
->>>>>>> Stashed changes
             border: 0 !important;
         }
         .nav-pills .nav-link{
