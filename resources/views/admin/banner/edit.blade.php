@@ -22,24 +22,46 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
-                        @if(Auth::user()->hasAnyRole('superadmin','admin'))
-                        <div class="mb-3">
-                            <label class="form-label">เว็บไซต์</label>
-                            <select name="website" class="form-control form-control-sm" required readonly>
-                                <option value="" disabled>--- เลือกเว็บไซต์ ---</option>
-                                @foreach($websites as $item)
-                                    <option value="{{$item->id}}" @if($banner->website_id == $item->id) selected @endif>{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-
-                        <div class="mb-3">
-                            <label class="form-label">ชื่อแบนเนอร์</label>
-                            <input type="text" class="form-control form-control-sm" name="title" value="{{ $banner->title }}" required>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @if(Auth::user()->hasAnyRole('superadmin','admin'))
+                                <div class="mb-3">
+                                    <label class="form-label">เว็บไซต์</label>
+                                    <select name="website" class="form-control form-control-sm" required readonly>
+                                        <option value="" disabled>--- เลือกเว็บไซต์ ---</option>
+                                        @foreach($websites as $item)
+                                            <option value="{{$item->id}}" @if($banner->website_id == $item->id) selected @endif>{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อแบนเนอร์ (ภาษาไทย)</label>
+                            <input type="text" class="form-control form-control-sm" name="title_th" value="{{ json_decode($banner->title)->th }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รายละเอียด (ภาษาไทย)</label>
+                            <input type="text" class="form-control form-control-sm" name="detail_th" value="{{ json_decode($banner->detail)->th }}">
+                        </div>
+                    </div>
+                    @if(Auth::user()->hasPermissionTo('english-language'))
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อแบนเนอร์ (ภาษาอังกฤษ)</label>
+                            <input type="text" class="form-control form-control-sm" name="title_en" value="{{ json_decode($banner->title)->en }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รายละเอียด (ภาษาอังกฤษ)</label>
+                            <input type="text" class="form-control form-control-sm" name="detail_en" value="{{ json_decode($banner->detail)->en }}">
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6">

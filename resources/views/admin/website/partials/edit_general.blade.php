@@ -18,14 +18,31 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">ชื่อไตเติ้ลเว็บไซต์</label>
-            <input type="text" class="form-control form-control-sm" name="title" value="{{ $website->title }}">
-        </div>
+        <div class="row">
+            <div class="@if(Auth::user()->hasPermissionTo('english-language')) col-sm-6 @else col-sm-12 @endif">
+                <div class="mb-3">
+                    <label class="form-label">ชื่อไตเติ้ลเว็บไซต์ (ภาษาไทย)</label>
+                    <input type="text" class="form-control form-control-sm" name="title_th" value="{{ json_decode($website->title)->th }}">
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">ที่อยู่</label>
-            <textarea type="text" class="form-control form-control-sm" name="address">{{ $website->address }}</textarea>
+                <div class="mb-3">
+                    <label class="form-label">ที่อยู่ (ภาษาไทย)</label>
+                    <textarea type="text" class="form-control form-control-sm" name="address_th">{{ json_decode($website->address)->th }}</textarea>
+                </div>
+            </div>
+            @if(Auth::user()->hasPermissionTo('english-language'))
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <label class="form-label">ชื่อไตเติ้ลเว็บไซต์ (ภาษาอังกฤษ)</label>
+                    <input type="text" class="form-control form-control-sm" name="title_en" value="{{ json_decode($website->title)->en }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">ที่อยู่ (ภาษาอังกฤษ)</label>
+                    <textarea type="text" class="form-control form-control-sm" name="address_en">{{ json_decode($website->address)->en }}</textarea>
+                </div>
+            </div>
+            @endif
         </div>
 
         <hr/>

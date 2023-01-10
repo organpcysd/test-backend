@@ -66,7 +66,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
-                                                    <label class="form-label">หัวข้อ</label>
+                                                    <label class="form-label">ชื่อสาขา</label>
                                                     <input type="text" class="form-control form-control-sm" name="name_en">
                                                 </div>
                                                 <div class="mb-3">
@@ -130,6 +130,34 @@
                                 <div class="mb-3">
                                     <label class="form-label">Google Map</label> <small class="text-danger">**embed link</small> <br/>
                                     <input type="text" class="form-control form-control-sm" name="google_map">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Social 1</label>
+                                    <input type="text" class="form-control form-control-sm" name="social_1">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Social 2</label>
+                                    <input type="text" class="form-control form-control-sm" name="social_2">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Social 3</label>
+                                    <input type="text" class="form-control form-control-sm" name="social_3">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Social 4</label>
+                                    <input type="text" class="form-control form-control-sm" name="social_4">
                                 </div>
                             </div>
                         </div>

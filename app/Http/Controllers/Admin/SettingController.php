@@ -158,11 +158,31 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $title = [
+            'th' => $request->title_th,
+            'en' => $request->title_en
+        ];
+
+        $address = [
+            'th' => $request->address_th,
+            'en' => $request->address_en
+        ];
+
+        $short_about_us = [
+            'th' => $request->short_about_us_th,
+            'en' => $request->short_about_us_en
+        ];
+
+        $about_us = [
+            'th' => $request->about_us_th,
+            'en' => $request->about_us_en
+        ];
+
         $website = Website::whereId($id)->first();
         // $website->name = $request->name;
         // $website->domain_name = $request->domain_name;
-        $website->title = $request->title;
-        $website->address = $request->address;
+        $website->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $website->address = json_encode($address,JSON_UNESCAPED_UNICODE);
         $website->phone1 = $request->phone1;
         $website->phone2 = $request->phone2;
         $website->fax = $request->fax;
@@ -180,8 +200,8 @@ class SettingController extends Controller
         $website->linkedin = $request->linkedin;
         $website->whatsapp = $request->whatsapp;
         $website->google_map = $request->google_map;
-        $website->about_us = $request->about_us;
-        $website->short_about_us = $request->short_about_us;
+        $website->about_us = json_encode($about_us,JSON_UNESCAPED_UNICODE);
+        $website->short_about_us = json_encode($short_about_us,JSON_UNESCAPED_UNICODE);
         $website->seo_keyword = $request->seo_keyword;
         $website->seo_description = $request->seo_description;
 

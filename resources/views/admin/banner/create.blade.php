@@ -48,6 +48,7 @@
                             <input type="text" class="form-control form-control-sm" name="detail_th">
                         </div>
                     </div>
+                    @if(Auth::user()->hasPermissionTo('english-language'))
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label class="form-label">ชื่อแบนเนอร์ (ภาษาอังกฤษ)</label>
@@ -58,6 +59,7 @@
                             <input type="text" class="form-control form-control-sm" name="detail_en">
                         </div>
                     </div>
+                    @endif
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6">

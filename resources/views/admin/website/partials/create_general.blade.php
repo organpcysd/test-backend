@@ -18,15 +18,33 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">ชื่อไตเติ้ลเว็บไซต์</label>
-            <input type="text" class="form-control form-control-sm" name="title">
+        <div class="row">
+            <div class="@if(Auth::user()->hasPermissionTo('english-language')) col-sm-6 @else col-sm-12 @endif">
+                <div class="mb-3">
+                    <label class="form-label">ชื่อไตเติ้ลเว็บไซต์ (ภาษาไทย)</label>
+                    <input type="text" class="form-control form-control-sm" name="title_th">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">ที่อยู่ (ภาษาไทย)</label>
+                    <textarea type="text" class="form-control form-control-sm" name="address_th"></textarea>
+                </div>
+            </div>
+            @if(Auth::user()->hasPermissionTo('english-language'))
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <label class="form-label">ชื่อไตเติ้ลเว็บไซต์ (ภาษาอังกฤษ)</label>
+                    <input type="text" class="form-control form-control-sm" name="title_en">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">ที่อยู่ (ภาษาอังกฤษ)</label>
+                    <textarea type="text" class="form-control form-control-sm" name="address_en"></textarea>
+                </div>
+            </div>
+            @endif
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">ที่อยู่</label>
-            <textarea type="text" class="form-control form-control-sm" name="address"></textarea>
-        </div>
 
         <hr/>
         <h3 class="mb-3">ข้อมูลติดต่อ</h3>

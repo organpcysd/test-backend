@@ -120,6 +120,10 @@ class WebsiteBranchController extends Controller
         $branch->line = $request->line;
         $branch->line_token = $request->line_token;
         $branch->email = $request->email;
+        $branch->social_1 = $request->social_1;
+        $branch->social_2 = $request->social_2;
+        $branch->social_3 = $request->social_3;
+        $branch->social_4 = $request->social_4;
 
         $branch->created_at = Carbon::now();
         $branch->updated_at = Carbon::now();
@@ -191,6 +195,10 @@ class WebsiteBranchController extends Controller
         $branch->line = $request->line;
         $branch->line_token = $request->line_token;
         $branch->email = $request->email;
+        $branch->social_1 = $request->social_1;
+        $branch->social_2 = $request->social_2;
+        $branch->social_3 = $request->social_3;
+        $branch->social_4 = $request->social_4;
 
         $branch->updated_at = Carbon::now();
 
