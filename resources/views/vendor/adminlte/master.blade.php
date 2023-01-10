@@ -91,9 +91,7 @@
             padding: -1rem !important;
             border: 0 !important;
         }
-        .nav-pills .nav-link{
-            border-radius: 0rem !important;
-        }
+
         .navbar-light .navbar-nav .nav-link{
             color: #ffffff
         }
