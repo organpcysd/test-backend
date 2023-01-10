@@ -54,7 +54,7 @@ class FaqController extends Controller
                     return $answer;
                 })
                 ->addColumn('btn',function ($data){
-                    $btn = '<a class="btn btn-sm btn-warning" href="'.route('faq.edit',['faq' => $data['id']]).'"><i
+                    $btn = '<a class="btn btn-sm btn-warning" href="'.route('faq.edit',['faq' => $data['slug']]).'"><i
                             class="fa fa-pen"
                             data-toggle="tooltip"
                             title="แก้ไข"></i></a>
