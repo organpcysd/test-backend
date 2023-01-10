@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\APIs;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helper\HelperController;
+// use App\Http\Controllers\Helper\DecodedDataController;
 use Illuminate\Http\Request;
 
 use App\Models\Website;
@@ -13,7 +15,7 @@ class ApiController extends Controller
     // Banners
     public function getDataBanners($website_code){
 
-        $website = Website::where('website_code',$website_code)->first();
+        $website = Website::where('website_code',base64_decode($website_code))->first();
         $banners = Banner::where('publish',1)->where('website_id',$website->id)->get();
 
         foreach ($banners as $key => $banner) {
@@ -21,20 +23,8 @@ class ApiController extends Controller
             $banners[$key]['img_mobile'] = ($banner->getFirstMediaUrl('banner_mobile') ? $banner->getFirstMediaUrl('banner_mobile') : asset('images/no-image.jpg'));
         }
 
-        $string = "organ";
-        $str_len = strlen($string);
+        $banners = (new HelperController)->dataparsing($banners,$website_code);
 
-        $str_to_insert = 'x';
-
-        for($i = 0; $i <= 5; $i++){
-            if($i%2 == 0){
-                $string = substr_replace($string, $str_to_insert, $i+1, 0);
-            }
-        }
-
-        dd($string);
-
-        return response()->json([$banners], 200);
-        // return response()->json([$banners], 200);
+        return response()->json($banners, 200);
     }
 }
