@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@php $pagename = 'เพิ่มโปรโมชั่น'; @endphp
+@php $pagename = 'เพิ่มรีวิว'; @endphp
 @section('title', $pagename)
 @section('content')
 <div class="contrainer p-2">
