@@ -17,6 +17,10 @@
             {{ $pagename }}
         </div>
         <div class="card-body">
+            <div class="float-right">
+                <input type="search" id="custom-search-input" class="form-control form-control-sm" placeholder="ค้นหา">
+            </div>
+
             <a href="{{ route('role.create') }}" class="btn btn-info mb-2">เพิ่มข้อมูล</a>
             <table id="table" class="table table-striped table-hover table-sm dataTable no-footer dtr-inline nowrap"
                 style="width: 100%;">
@@ -62,8 +66,14 @@
                     {data: 'name'},
                     {data: 'btn'},
                 ],
+                "dom": 'rtip',
             });
         });
+
+        // search
+        $('#custom-search-input').keyup(function(){
+            table.search($(this).val()).draw();
+        })
     </script>
 @endpush
 @endsection
