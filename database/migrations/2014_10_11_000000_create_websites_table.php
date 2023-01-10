@@ -60,6 +60,10 @@ class CreateWebsitesTable extends Migration
             $table->string('facebook')->nullable()->comment('facebook fanpage');
             $table->string('messenger')->nullable()->comment('facebook messenger');
             $table->string('google_map')->nullable()->comment('หมุดที่อยู่บริษัท');
+            $table->string('social_1')->nullable()->comment('โซเชียลอื่นๆ 1');
+            $table->string('social_2')->nullable()->comment('โซเชียลอื่นๆ 2');
+            $table->string('social_3')->nullable()->comment('โซเชียลอื่นๆ 3');
+            $table->string('social_4')->nullable()->comment('โซเชียลอื่นๆ 4');
             $table->boolean('publish')->nullable()->default(1)->comment('เผยแพร่');
             $table->integer('sort')->nullable()->default(0)->comment('ลำดับ');
 

@@ -119,7 +119,7 @@ class ServiceController extends Controller
         ];
 
         $service = new Service();
-        $service->title = json_encode($title);
+        $service->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $service->website_id = $request->website;
@@ -127,8 +127,8 @@ class ServiceController extends Controller
             $service->website_id = Auth::user()->website_id;
         }
 
-        $service->short_detail = json_encode($short_detail);
-        $service->detail = json_encode($detail);
+        $service->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $service->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $service->seo_keyword = $request->post('seo_keyword');
         $service->seo_description = $request->post('seo_description');
         $service->created_at = Carbon::now();
@@ -206,7 +206,7 @@ class ServiceController extends Controller
         ];
 
         $service = Service::whereId($id)->first();
-        $service->title = json_encode($title);
+        $service->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $service->website_id = $request->website;
@@ -214,8 +214,8 @@ class ServiceController extends Controller
             $service->website_id = Auth::user()->website_id;
         }
 
-        $service->short_detail = json_encode($short_detail);
-        $service->detail = json_encode($detail);
+        $service->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $service->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $service->seo_keyword = $request->post('seo_keyword');
         $service->seo_description = $request->post('seo_description');
         $service->updated_at = Carbon::now();

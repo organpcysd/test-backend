@@ -161,13 +161,12 @@ class ProductController extends Controller
             'en' => $request->detail_en
         ];
 
-
         $product = new Product();
         $product->product_category_id = $request->category;
         // $product->sub_product_category_id = $request->subcategory;
-        $product->title = json_encode($title);
-        $product->short_detail = json_encode($short_detail);
-        $product->detail = json_encode($detail);
+        $product->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $product->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $product->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $product->price = $request->price;
         $product->price_promotion = $request->price_promotion;
 
@@ -262,9 +261,9 @@ class ProductController extends Controller
         $product = Product::whereId($id)->first();
         $product->product_category_id = $request->category;
         // $product->sub_product_category_id = $request->subcategory;
-        $product->title = json_encode($title);
-        $product->detail = json_encode($detail);
-        $product->short_detail = json_encode($short_detail);
+        $product->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $product->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
+        $product->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
         $product->price = $request->price;
         $product->price_promotion = $request->price_promotion;
         $product->seo_keyword = $request->seo_keyword;

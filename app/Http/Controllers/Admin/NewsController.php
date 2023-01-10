@@ -117,7 +117,7 @@ class NewsController extends Controller
         ];
 
         $news = new News();
-        $news->title = json_encode($title);
+        $news->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $news->website_id = $request->website;
@@ -125,8 +125,8 @@ class NewsController extends Controller
             $news->website_id = Auth::user()->website_id;
         }
 
-        $news->short_detail = json_encode($short_detail);
-        $news->detail = json_encode($detail);
+        $news->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $news->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $news->seo_keyword = $request->post('seo_keyword');
         $news->seo_description = $request->post('seo_description');
         $news->created_at = Carbon::now();
@@ -204,7 +204,7 @@ class NewsController extends Controller
         ];
 
         $news = News::whereId($id)->first();
-        $news->title = $title;
+        $news->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $news->website_id = $request->website;
@@ -212,8 +212,8 @@ class NewsController extends Controller
             $news->website_id = Auth::user()->website_id;
         }
 
-        $news->short_detail = json_encode($short_detail);
-        $news->detail = json_encode($detail);
+        $news->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $news->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $news->seo_keyword = $request->post('seo_keyword');
         $news->seo_description = $request->post('seo_description');
         $news->updated_at = Carbon::now();

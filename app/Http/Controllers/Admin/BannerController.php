@@ -100,7 +100,19 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $banner = new Banner();
-        $banner->title = $request->post('title');
+
+        $title = [
+            'th' => $request->title_th,
+            'en' => $request->title_en
+        ];
+
+        $detail = [
+            'th' => $request->detail_th,
+            'en' => $request->detail_en
+        ];
+
+        $banner->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $banner->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $banner->website_id = $request->website;
@@ -183,7 +195,19 @@ class BannerController extends Controller
     public function update(Request $request, $id)
     {
         $banner = Banner::whereId($id)->first();
-        $banner->title = $request->post('title');
+
+        $title = [
+            'th' => $request->title_th,
+            'en' => $request->title_en
+        ];
+
+        $detail = [
+            'th' => $request->detail_th,
+            'en' => $request->detail_en
+        ];
+
+        $banner->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $banner->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $banner->website_id = $request->website;

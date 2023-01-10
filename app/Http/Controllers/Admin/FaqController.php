@@ -117,8 +117,8 @@ class FaqController extends Controller
 
         $faq = new Faq();
         $faq->faq_category_id = $request->faqcategory;
-        $faq->question = json_encode($question);
-        $faq->answer = json_encode($answer);
+        $faq->question = json_encode($question,JSON_UNESCAPED_UNICODE);
+        $faq->answer = json_encode($answer,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $faq->website_id = $request->website;
@@ -186,8 +186,8 @@ class FaqController extends Controller
 
         $faq = Faq::whereId($id)->first();
         $faq->faq_category_id = $request->faqcategory;
-        $faq->question = json_encode($question);
-        $faq->answer = json_encode($answer);
+        $faq->question = json_encode($question,JSON_UNESCAPED_UNICODE);
+        $faq->answer = json_encode($answer,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $faq->website_id = $request->website;

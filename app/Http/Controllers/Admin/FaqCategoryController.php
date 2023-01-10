@@ -95,7 +95,7 @@ class FaqCategoryController extends Controller
         ];
 
         $faqcategory = new FaqCategory();
-        $faqcategory->title = json_encode($title);
+        $faqcategory->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $faqcategory->website_id = $request->website;
@@ -152,7 +152,7 @@ class FaqCategoryController extends Controller
         ];
 
         $faqcategory = FaqCategory::whereId($id)->first();
-        $faqcategory->title = json_encode($title);
+        $faqcategory->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $faqcategory->website_id = $request->website;

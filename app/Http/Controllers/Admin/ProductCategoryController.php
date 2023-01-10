@@ -103,8 +103,8 @@ class ProductCategoryController extends Controller
         ];
 
         $category = new ProductCategory();
-        $category->title = json_encode($title);
-        $category->detail = json_encode($detail);
+        $category->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $category->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $category->parent_id = $request->parent;
 
         if($request->website){
@@ -207,8 +207,8 @@ class ProductCategoryController extends Controller
         ];
 
         $category = ProductCategory::whereId($id)->first();
-        $category->title = json_encode($title);
-        $category->detail = json_encode($detail);
+        $category->title = json_encode($title,JSON_UNESCAPED_UNICODE);
+        $category->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $category->parent_id = $request->parent;
 
         if($request->website){

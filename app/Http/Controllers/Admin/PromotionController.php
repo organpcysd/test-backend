@@ -118,7 +118,7 @@ class PromotionController extends Controller
         ];
 
         $promotion = new Promotion();
-        $promotion->title = json_encode($title);
+        $promotion->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $promotion->website_id = $request->website;
@@ -126,8 +126,8 @@ class PromotionController extends Controller
             $promotion->website_id = Auth::user()->website_id;
         }
 
-        $promotion->short_detail = json_encode($short_detail);
-        $promotion->detail = json_encode($detail);
+        $promotion->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $promotion->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $promotion->seo_keyword = $request->post('seo_keyword');
         $promotion->seo_description = $request->post('seo_description');
         $promotion->created_at = Carbon::now();
@@ -205,7 +205,7 @@ class PromotionController extends Controller
         ];
 
         $promotion = Promotion::whereId($id)->first();
-        $promotion->title = json_encode($title);
+        $promotion->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $promotion->website_id = $request->website;
@@ -213,8 +213,8 @@ class PromotionController extends Controller
             $promotion->website_id = Auth::user()->website_id;
         }
 
-        $promotion->short_detail = json_encode($short_detail);
-        $promotion->detail = json_encode($detail);
+        $promotion->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $promotion->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $promotion->seo_keyword = $request->post('seo_keyword');
         $promotion->seo_description = $request->post('seo_description');
         $promotion->updated_at = Carbon::now();

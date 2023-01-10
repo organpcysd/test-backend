@@ -118,7 +118,7 @@ class ReviewController extends Controller
         ];
 
         $review = new Review();
-        $review->title = json_encode($title);
+        $review->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $review->website_id = $request->website;
@@ -126,8 +126,8 @@ class ReviewController extends Controller
             $review->website_id = Auth::user()->website_id;
         }
 
-        $review->short_detail = json_encode($short_detail);
-        $review->detail = json_encode($detail);
+        $review->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $review->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $review->facebook = $request->post('facebook');
         $review->twitter = $request->post('twitter');
         $review->instagram = $request->post('instagram');
@@ -207,7 +207,7 @@ class ReviewController extends Controller
         ];
 
         $review = Review::whereId($id)->first();
-        $review->title = json_encode($title);
+        $review->title = json_encode($title,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $review->website_id = $request->website;
@@ -215,8 +215,8 @@ class ReviewController extends Controller
             $review->website_id = Auth::user()->website_id;
         }
 
-        $review->short_detail = json_encode($short_detail);
-        $review->detail = json_encode($detail);
+        $review->short_detail = json_encode($short_detail,JSON_UNESCAPED_UNICODE);
+        $review->detail = json_encode($detail,JSON_UNESCAPED_UNICODE);
         $review->facebook = $request->post('facebook');
         $review->twitter = $request->post('twitter');
         $review->instagram = $request->post('instagram');

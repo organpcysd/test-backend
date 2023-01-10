@@ -16,7 +16,8 @@ class CreateBannersTable extends Migration
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
             $table->string('slug');
-            $table->string('title')->comment('ชื่อแบนเนอร์');
+            $table->string('title')->nullable()->comment('ชื่อแบนเนอร์');
+            $table->string('detail')->nullable()->comment('รายละเอียด');
             $table->boolean('publish')->default(1)->comment('เผยแพร่');
             $table->integer('sort')->default(0)->comment('ลำดับ');
             $table->timestamps();

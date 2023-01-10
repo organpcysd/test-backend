@@ -104,7 +104,7 @@ class WebsiteBranchController extends Controller
         ];
 
         $branch = new WebsiteBranch();
-        $branch->name = json_encode($name);
+        $branch->name = json_encode($name,JSON_UNESCAPED_UNICODE);
 
         if($request->website){
             $branch->website_id = $request->website;
@@ -112,7 +112,7 @@ class WebsiteBranchController extends Controller
             $branch->website_id = Auth::user()->website_id;
         }
 
-        $branch->address = json_encode($address);
+        $branch->address = json_encode($address,JSON_UNESCAPED_UNICODE);
         $branch->phone = $request->phone;
         $branch->google_map = $request->google_map;
         $branch->facebook = $request->facebook;

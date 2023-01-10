@@ -21,21 +21,41 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
-                        @if(Auth::user()->hasAnyRole('superadmin','admin'))
-                        <div class="mb-3">
-                            <label class="form-label" selected>เว็บไซต์</label> <br/>
-                            <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
-                                <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
-                                @foreach($websites as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @if(Auth::user()->hasAnyRole('superadmin','admin'))
+                                <div class="mb-3">
+                                    <label class="form-label" selected>เว็บไซต์</label> <br/>
+                                    <select name="website" id="website" class="sel2 ac-contentform-control form-control-sm" style="width: 100%;">
+                                        <option value="" disabled selected>--- เลือกเว็บไซต์ ---</option>
+                                        @foreach($websites as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
+                            </div>
                         </div>
-                        @endif
+                    </div>
+                    <div class="col-sm-6">
                         <div class="mb-3">
-                            <label class="form-label">ชื่อแบนเนอร์</label>
-                            <input type="text" class="form-control form-control-sm" name="title" required>
+                            <label class="form-label">ชื่อแบนเนอร์ (ภาษาไทย)</label>
+                            <input type="text" class="form-control form-control-sm" name="title_th">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รายละเอียด (ภาษาไทย)</label>
+                            <input type="text" class="form-control form-control-sm" name="detail_th">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อแบนเนอร์ (ภาษาอังกฤษ)</label>
+                            <input type="text" class="form-control form-control-sm" name="title_en">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รายละเอียด (ภาษาอังกฤษ)</label>
+                            <input type="text" class="form-control form-control-sm" name="detail_en">
                         </div>
                     </div>
                     <div class="col-sm-12">
