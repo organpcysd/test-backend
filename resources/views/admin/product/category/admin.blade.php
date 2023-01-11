@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@php $pagename = 'จัดการเว็บไซต์'; @endphp
+@php $pagename = 'จัดการหมวดหมู่'; @endphp
 @section('title', $pagename)
 @section('content')
 <div class="contrainer p-2">
