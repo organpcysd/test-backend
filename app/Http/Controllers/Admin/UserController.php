@@ -26,8 +26,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            if(Auth::user()->hasAnyRole('superadmin','admin')){
+            if(Auth::user()->hasRole('superadmin')){
                 $data = User::all();
+            }elseif(Auth::user()->hasRole('admin')){
+                $data = User::whereNotIn('id', User::role('superadmin')->pluck('id')->toArray())->get();
             }else{
                 $data = User::whereHas('roles', function($q){$q->whereIn('name',['admin','user']);});
             }
@@ -63,6 +65,8 @@ class UserController extends Controller
                 })
                 ->addColumn('status',function ($data){
                     if(Auth::user()->id == $data['id']){
+                        $status = '';
+                    }elseif($data->hasRole('superadmin')){
                         $status = '';
                     }else{
                         if($data['status']){

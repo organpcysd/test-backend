@@ -69,7 +69,7 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">คำตอบ</label>
-                                                    <textarea class="summernote form-control form-control-sm" name="answer_th" required></textarea>
+                                                    <textarea class="summernote form-control form-control-sm" name="answer_th" id="answer_th"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,12 +79,12 @@
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">คำถาม</label>
-                                                    <input type="text" class="form-control form-control-sm" name="question_en">
+                                                    <input type="text" class="form-control form-control-sm" name="question_en" id="question_en">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label">คำตอบ</label>
-                                                    <textarea class="summernote form-control form-control-sm" name="answer_en"></textarea>
+                                                    <textarea class="summernote form-control form-control-sm" name="answer_en" id="answer_en"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,18 +115,22 @@
         role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
 
         if($('#website').val() == null && role === true){
-            toastr.options = {
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
-                "progressBar": true,
-                "newestOnTop": true,
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-            toastr.info('กรุณาเลือกเว็บไซต์');
+            toastr.error('กรุณาเลือกเว็บไซต์');
             return false;
+        }
+
+        if($('#answer_th').val() == ""){
+            toastr.error('กรุณาใส่คำตอบ (ภาษาไทย)');
+            return false;
+        }
+
+        question_en = $('#question_en').val();
+
+        if(question_en){
+            if($('#answer_en').val() == ""){
+                toastr.error('กรุณาใส่คำตอบ (ภาษาอังกฤษ)');
+                return false;
+            }
         }
     });
 

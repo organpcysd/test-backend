@@ -159,17 +159,7 @@
         role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
 
         if($('#website').val() == null && role === true){
-            toastr.options = {
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
-                "progressBar": true,
-                "newestOnTop": true,
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-            toastr.info('กรุณาเลือกเว็บไซต์');
+            toastr.error('กรุณาเลือกเว็บไซต์');
             return false;
         }
     });

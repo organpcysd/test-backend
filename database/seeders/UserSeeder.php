@@ -53,6 +53,22 @@ class UserSeeder extends Seeder
         ]);
 
         $user2 = \App\Models\User::factory()->create([
+            'name' => 'พิชญสุดา',
+            'username' => 'organpcysd',
+            'email' => 'organpcysd@gmail.com',
+            'status' => 1,
+            'password' => bcrypt('Organpcysd'),
+        ]);
+
+        $user3 = \App\Models\User::factory()->create([
+            'name' => 'ธนัญศักดิ์',
+            'username' => 'thanansak123',
+            'email' => 'thanansak123@gmail.com',
+            'status' => 1,
+            'password' => bcrypt('thanansak123'),
+        ]);
+
+        $user4 = \App\Models\User::factory()->create([
             'name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@gmail.com',
@@ -60,7 +76,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $user3 = \App\Models\User::factory()->create([
+        $user5 = \App\Models\User::factory()->create([
             'name' => 'user',
             'username' => 'user',
             'email' => 'user@gmail.com',
@@ -69,7 +85,9 @@ class UserSeeder extends Seeder
         ]);
 
         $user1->assignRole($superadmin_role);
-        $user2->assignRole($admin_role);
-        $user3->assignRole($user_role);
+        $user2->assignRole($superadmin_role);
+        $user3->assignRole($superadmin_role);
+        $user4->assignRole($admin_role);
+        $user5->assignRole($user_role);
     }
 }

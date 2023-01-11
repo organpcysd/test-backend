@@ -139,36 +139,6 @@
             $('#imgInp').trigger('click');
     });
 
-    function previewImg(id) {
-            const [file] = id.files
-            if (file) {
-                if(id.id === "imgInp"){
-                    showimg.src = URL.createObjectURL(file);
-                }
-            }
-        }
-
-        function fileValidation(ele) {
-            var fileInput = ele;
-            var filePath = fileInput.value;
-
-            // Allowing file type
-            var allowedExtensions = /(\.gif|\.png|\.jpeg|\.jpg)$/i;
-
-            if (!allowedExtensions.exec(filePath)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ผิดพลาด',
-                    text: 'ไฟล์ที่นำเข้าต้องเป็นไฟล์รูปภาพเท่านั้น',
-                    timer: 2000,
-                })
-                fileInput.value = '';
-                return false;
-            } else {
-                previewImg(fileInput);
-            }
-        }
-
         //Dropzone
 
         Dropzone.prototype.defaultOptions.dictRemoveFile = "<i class=\"fa fa-trash ml-auto mt-2 fa-1x text-danger\"></i> ลบรูปภาพ";

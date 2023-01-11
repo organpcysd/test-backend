@@ -44,7 +44,7 @@ class WebsiteBranchController extends Controller
                     return $website;
                 })
                 ->addColumn('btn',function ($data){
-                    $btn = '<a class="btn btn-sm btn-warning" href="'.route('branch.edit',['branch' => $data['id']]).'"><i
+                    $btn = '<a class="btn btn-sm btn-warning" href="'.route('branch.edit',['branch' => $data['slug']]).'"><i
                             class="fa fa-pen"
                             data-toggle="tooltip"
                             title="แก้ไข"></i></a>
@@ -129,6 +129,17 @@ class WebsiteBranchController extends Controller
         $branch->updated_at = Carbon::now();
 
         if($branch->save()){
+
+            $i = 0;
+            $medias_original_name = $request->input('image', []);
+            foreach ($request->input('image', []) as $file) {
+                $branch->addMedia(storage_path('tmp/uploads/' . $file))
+                    ->withCustomProperties(['order' => $i])
+                    ->setName($medias_original_name[$i])
+                    ->toMediaCollection('website_branch');
+                $i++;
+            }
+
             Alert::success('เพิ่มข้อมูลสำเร็จ');
             return redirect()->route('branch.index');
         }
@@ -155,8 +166,15 @@ class WebsiteBranchController extends Controller
      */
     public function edit(WebsiteBranch $branch)
     {
+        dd($branch);
         $websites = Website::all();
-        return view('admin.website_branch.edit',compact('branch','websites'));
+
+        $medias = $branch->getMedia('website_branch');
+        $images = $medias->sortBy(function ($med, $key) {
+            return $med->getCustomProperty('order');
+        });
+
+        return view('admin.website_branch.edit',compact('branch','websites','images'));
     }
 
     /**
@@ -203,6 +221,33 @@ class WebsiteBranchController extends Controller
         $branch->updated_at = Carbon::now();
 
         if($branch->save()){
+            $medias = $branch->getMedia('website_branch');
+            if (count($medias) > 0) {
+                foreach ($medias as $media) {
+                    if (!in_array($media->file_name, $request->input('image', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+
+            $i = 1;
+            $medias = $branch->getMedia('website_branch')->pluck('file_name')->toArray();
+            $medias_original_name = $request->input('image', []);
+
+            foreach ($request->input('image', []) as $file) {
+                if (count($medias) === 0 || !in_array($file, $medias)) {
+                    $branch->addMedia(storage_path('tmp/uploads/' . $file))
+                        ->withCustomProperties(['order' => $i])
+                        ->setName($medias_original_name[$i - 1])
+                        ->toMediaCollection('website_branch');
+                } else {
+                    $image = $branch->getMedia('website_branch')->where('file_name', $file)->first();
+                    $image->setCustomProperty('order', $i);
+                    $image->save();
+                }
+                $i++;
+            }
+
             Alert::success('บันทึกข้อมูลสำเร็จ');
             return redirect()->route('branch.index');
         }

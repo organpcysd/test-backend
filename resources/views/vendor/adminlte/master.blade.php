@@ -92,10 +92,6 @@
             border: 0 !important;
         }
 
-        .navbar-light .navbar-nav .nav-link{
-            color: #ffffff
-        }
-
 		.sidebar {
             padding-left: 0 !important ;
             padding-right: 0 !important ;
@@ -227,6 +223,19 @@
 
         //SummerNote
         $(document).ready(function() {
+            //toastr
+
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "progressBar": true,
+                "newestOnTop": true,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
             $('.sel2').select2();
             bsCustomFileInput.init();
             // emojione.ascii = true;

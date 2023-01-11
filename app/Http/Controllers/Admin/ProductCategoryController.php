@@ -174,15 +174,14 @@ class ProductCategoryController extends Controller
             $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
         }
 
-        $cate = [];
+        // $cate = [];
 
-        foreach($categories as $item){
-            if(!$item->parent_id){
-                array_push($cate,$item);
-            }
-        }
+        // foreach($categories as $item){
+        //     if(!$item->parent_id){
+        //         array_push($cate,$item);
+        //     }
+        // }
 
-        dd($cate);
 
         return view('admin.product.category.edit', compact('category','websites','categories'));
     }

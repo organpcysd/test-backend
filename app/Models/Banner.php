@@ -31,6 +31,10 @@ class Banner extends Model implements HasMedia
         ];
     }
 
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('banner');

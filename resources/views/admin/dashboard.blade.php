@@ -1,11 +1,13 @@
 @extends('adminlte::page')
 @php $pagename = 'หน้าแรก' @endphp
 @section('title', setting('title').' | '.$pagename)
+@push('css')
 <style>
     .info-box .info-box-icon{
         width: 65px !important;
     }
 </style>
+@endpush
 @section('content')
     <div class="p-3">
         <h3 class="mb-3">ภาพรวม</h3>

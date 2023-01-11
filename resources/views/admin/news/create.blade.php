@@ -136,54 +136,10 @@
         role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
 
         if($('#website').val() == null && role === true){
-            toastr.options = {
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
-                "progressBar": true,
-                "newestOnTop": true,
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-            toastr.info('กรุณาเลือกเว็บไซต์');
+            toastr.error('กรุณาเลือกเว็บไซต์');
             return false;
         }
     });
-
-    $('#showimg').click(function () {
-            $('#imgInp').trigger('click');
-    });
-
-    function previewImg(id) {
-            const [file] = id.files
-            if (file) {
-                if(id.id === "imgInp"){
-                    showimg.src = URL.createObjectURL(file);
-                }
-            }
-        }
-
-        function fileValidation(ele) {
-            var fileInput = ele;
-            var filePath = fileInput.value;
-
-            // Allowing file type
-            var allowedExtensions = /(\.gif|\.png|\.jpeg|\.jpg)$/i;
-
-            if (!allowedExtensions.exec(filePath)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ผิดพลาด',
-                    text: 'ไฟล์ที่นำเข้าต้องเป็นไฟล์รูปภาพเท่านั้น',
-                    timer: 2000,
-                })
-                fileInput.value = '';
-                return false;
-            } else {
-                previewImg(fileInput);
-            }
-        }
 
         //Dropzone
 

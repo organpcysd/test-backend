@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <form method="post" action="{{ route('faq.update',['faq' => $faq->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('faq.update',['faq' => $faq->id]) }}" enctype="multipart/form-data" id="form">
         @method('PUT')
         @csrf
         <div class="card card-info card-outline">
@@ -71,7 +71,7 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">คำตอบ</label>
-                                                    <textarea class="summernote form-control form-control-sm" name="answer_th" required>{{ json_decode($faq->answer)->th }}</textarea>
+                                                    <textarea class="summernote form-control form-control-sm" name="answer_th" id="answer_th">{{ json_decode($faq->answer)->th }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,12 +81,12 @@
                                             <div class="col-sm-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">คำถาม</label>
-                                                    <input type="text" class="form-control form-control-sm" name="question_en" value="{{ json_decode($faq->question)->en }}">
+                                                    <input type="text" class="form-control form-control-sm" name="question_en" id="question_en" value="{{ json_decode($faq->question)->en }}">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label">คำตอบ</label>
-                                                    <textarea class="summernote form-control form-control-sm" name="answer_en" required>{{ json_decode($faq->answer)->en }}</textarea>
+                                                    <textarea class="summernote form-control form-control-sm" name="answer_en" id="answer_en">{{ json_decode($faq->answer)->en }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +113,21 @@
 @push('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 <script>
+    $('#form').submit(function() {
+        if($('#answer_th').val() == ""){
+            toastr.error('กรุณาใส่คำตอบ (ภาษาไทย)');
+            return false;
+        }
 
+        question_en = $('#question_en').val();
+
+        if(question_en){
+            if($('#answer_en').val() == ""){
+                toastr.error('กรุณาใส่คำตอบ (ภาษาอังกฤษ)');
+                return false;
+            }
+        }
+    });
 </script>
 @endpush
 @endsection

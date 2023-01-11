@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class WebsiteBranch extends Model
+class WebsiteBranch extends Model implements HasMedia
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, InteractsWithMedia;
 
     protected $table = 'website_branches';
     protected $fillable = [
@@ -32,6 +34,15 @@ class WebsiteBranch extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('website_branch');
     }
 
     public function website() {
