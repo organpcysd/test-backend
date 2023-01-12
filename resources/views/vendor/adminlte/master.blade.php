@@ -170,6 +170,14 @@
             display: block;
         }
 
+        .fa-exclamation-triangle:before, .fa-triangle-exclamation:before, .fa-warning:before, .fa-bell:before{
+            color: white !important;
+        }
+
+        .main-header.text-sm .nav-link, .text-sm .main-header .nav-link{
+            color: white !important;
+        }
+
         body {
             font-family: kanit !important;
         }
