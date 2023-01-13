@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\ProductCategory;
 use App\Models\Website;
+use Google\Service\Books\Category;
+use PhpParser\Node\Stmt\While_;
 
 class ProductCategoryController extends Controller
 {
@@ -174,13 +176,38 @@ class ProductCategoryController extends Controller
             $categories = ProductCategory::where('website_id',Auth::user()->website_id)->where('publish',1)->get();
         }
 
-        // $cate = [];
+        $main_cates = ProductCategory::tree(); //category ที่เป็น Main ทั้งหมด
 
-        // foreach($categories as $item){
-        //     if(!$item->parent_id){
-        //         array_push($cate,$item);
-        //     }
-        // }
+        $parent_cate = [];
+        $parent_cates = [];
+
+        $cate_ids = [$category->id];
+        // dd($cate_ids);
+
+        foreach($categories as $item){
+            if(in_array($item->parent_id,$cate_ids)){
+                array_push($parent_cate,$item);
+            }
+        }
+
+        $round = 1;
+        $i = 0;
+
+        while ($i < $round) {
+            if($parent_cate){
+                    foreach($parent_cate as $pc){
+                        if($pc->parent_id){
+                            // array_push($parent_cates,$pc->id);
+                            $parent_cate = [];
+                            array_push($parent_cate,ProductCategory::where('parent_id',$pc->id)->get());
+                        }
+                    }
+                $round = 1;
+
+            }else{
+                $round = 0;
+            }
+        }
 
 
         return view('admin.product.category.edit', compact('category','websites','categories'));
@@ -240,8 +267,14 @@ class ProductCategoryController extends Controller
 
 
             }
+
             Alert::success('บันทึกข้อมูล');
-            return redirect()->route('productcategory.index');
+
+            if($request->website) {
+                return redirect()->route('productcategory.index',['website' => $request->website]);
+            }else{
+                return redirect()->route('productcategory.index');
+            }
         }
 
         Alert::error('ผิดพลาด');

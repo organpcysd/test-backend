@@ -153,7 +153,6 @@
 @section('plugins.Sweetalert2', true)
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 @push('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
 <script>
     $('#form').submit(function() {
         role = {!! Auth::user()->hasAnyRole('superadmin','admin') ? 'true' : 'false' !!};
@@ -163,78 +162,6 @@
             return false;
         }
     });
-
-        //Dropzone
-
-        Dropzone.prototype.defaultOptions.dictRemoveFile = "<i class=\"fa fa-trash ml-auto mt-2 fa-1x text-danger\"></i> ลบรูปภาพ";
-        Dropzone.autoDiscover = false;
-        var uploadedImageMap = {}
-        $('#imageDropzone').dropzone({
-            url: "{{ route('dropzone.upload') }}",
-            addRemoveLinks: true,
-            dictCancelUpload: 'ยกเลิกอัพโหลด',
-            acceptedFiles: 'image/*',
-            //alert accepted file
-            "error": function(file, message, xhr) {
-                if (xhr == null) this.removeFile(file); // perhaps not remove on xhr errors
-                if(file.type == 'application/pdf') {
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'ผิดพลาด',
-                    text: 'ไฟล์ที่นำเข้าต้องเป็นไฟล์รูปภาพเท่านั้น',
-                    timer: 1500
-                })
-                }
-            },
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function(file, response) {
-                $(file.previewElement).append('<input type="hidden" name="image[]" value="' + response.name +
-                    '">')
-                uploadedImageMap[file.name] = response.name
-            },
-            init: function() {
-                @if (isset($images))
-                    @foreach ($images as $key => $image)
-                        var file = {!! json_encode($image) !!};
-                        file.url = '{!! $image->getUrl() !!}';
-                        file.name = '{!! $image->file_name !!}';
-                        this.options.addedfile.call(this, file)
-                        this.options.thumbnail.call(this, file, file.url);
-                        file.previewElement.classList.add('dz-complete')
-                        $(file.previewElement).append('<input type="hidden" name="image[]" value="' + file
-                            .file_name + '">')
-                    @endforeach
-                @endif
-                this.on('removedfile', (file) => {
-                    let data = {
-                        '_token': '{{ csrf_token() }}',
-                        'name': file.name,
-                    }
-
-                    $.ajax({
-                        type: 'post',
-                        url: "{{ route('dropzone.delete') }}",
-                        data: data,
-                        success: (response) => {
-
-                        }
-                    });
-                });
-            }
-        });
-        $(function() {
-            $("#imageDropzone").sortable({
-                items: '.dz-preview',
-                cursor: 'move',
-                opacity: 0.5,
-                containment: '#imageDropzone',
-                distance: 20,
-                tolerance: 'pointer'
-            });
-        });
-
 </script>
 
 @endpush

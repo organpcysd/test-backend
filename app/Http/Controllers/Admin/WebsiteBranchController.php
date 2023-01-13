@@ -166,7 +166,6 @@ class WebsiteBranchController extends Controller
      */
     public function edit(WebsiteBranch $branch)
     {
-        dd($branch);
         $websites = Website::all();
 
         $medias = $branch->getMedia('website_branch');
